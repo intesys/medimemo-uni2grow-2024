@@ -2,6 +2,7 @@
   "users": [
     {
       "id": 1,
+      "username": "admin",
       "name": "admin",
       "password": "admin",
       "lastName": "",
@@ -13,6 +14,7 @@
     },
     {
       "id": 2,
+      "username": "gest",
       "name": "guest",
       "password": "guest",
       "lastName": "",
