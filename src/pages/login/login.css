@@ -1,0 +1,71 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #ffffff;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.password {
+  text-align: right;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 30px;
+  background-color: rgb(251, 248, 248);
+  color: rgb(79, 76, 76);
+  padding: 30px;
+  width: 450px;
+  height: 350px;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: 20px;
+  .logo {
+    height: 44.744px;
+    width: 78.75px;
+  }
+
+  .appName {
+    height: 41px;
+    width: 177px;
+  }
+}
+.signButton {
+  background-color: brown;
+  border-color: black;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.icon {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex: 1 0 0;
+}
+.custom_Icon {
+  border: 1px solid black;
+  background-color: grey;
+}
