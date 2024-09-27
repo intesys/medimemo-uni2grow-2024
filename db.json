@@ -9,7 +9,8 @@
       "allergies": "",
       "phone": "",
       "email": "",
-      "address": ""
+      "address": "",
+      "username": ""
     },
     {
       "id": 2,
@@ -20,7 +21,20 @@
       "allergies": "",
       "phone": "",
       "email": "",
-      "address": ""
+      "address": "",
+      "username": ""
+    },
+    {
+      "id": 3,
+      "name": "expedit",
+      "password": "leo",
+      "lastName": "mbomda",
+      "image": "Nothing yet",
+      "allergies": "chocolate",
+      "phone": "+23769462238",
+      "email": "expeditleopold@gmail.com",
+      "address": "Boston, UK",
+      "username": "mel"
     }
   ],
   "therapies": [
