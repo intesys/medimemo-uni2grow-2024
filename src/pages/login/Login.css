@@ -1,0 +1,98 @@
+#root {
+    margin: auto;
+    padding: 80;
+    width: 400px;
+    background-color:white;
+  }
+  
+  body{
+    background-color:#F8F4F4;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .container{
+    padding: 10px;
+    background-color:#F8F4F4;
+  }
+  
+  .img{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .container2{
+    background-color: white;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    width: 100%;
+  }
+  
+  .divTitle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .textfielddiv{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    
+    margin-top: 20px;
+    
+  }
+  
+  .divforgot{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: end;
+    margin-right: 40px;
+    margin-top: 20px;
+  }
+  
+  .divbutton{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+  
+  span{
+    padding-bottom: 20px;
+  }
+  
+  .divor{
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    justify-content:space-around;
+    padding-bottom: 20px;
+    align-items: center;
+  }
+  
+  hr{
+    width: 100px;
+    height: inherit;
+  }
+  
+  .divimage{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+    padding-bottom: 30px;
+  }
+  
+  .error{
+    color: red;
+    display: flex;
+    justify-content:center;
+  }
