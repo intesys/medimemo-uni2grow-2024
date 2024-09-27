@@ -1,0 +1,62 @@
+#root {
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f8f4f4;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .container {
+    background-color: #f8f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .logo-container {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo {
+    width: 78.752px;
+    height: 44.744px;
+  }
+  .medimemo {
+    width: 177px;
+    height: 44px;
+  }
+  
+  .login_form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  /* form{
+    display: flex;
+    flex-direction: co;
+  } */
+  .panel {
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 40px 20px;
+    margin-top: 45px;
+    gap: 10px;
+  }
+  h3 {
+    text-align: center;
+  }
+  .link {
+    text-align: end;
+  }
+  p {
+    text-align: center;
+  }
+  .icon {
+    text-align: center;
+  }

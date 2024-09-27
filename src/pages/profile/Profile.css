@@ -1,0 +1,21 @@
+.panelProfil {
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+}
+
+.profil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.head {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 40px;
+}
