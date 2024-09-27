@@ -155,7 +155,7 @@ function Login() {
 
           <Divider>Or</Divider>
 
-          <div>
+          <div className="footer">
             <Button
               className="button"
               sx={{ color: "black", border: "1px solid black" }}
