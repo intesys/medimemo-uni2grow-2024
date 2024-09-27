@@ -3,6 +3,7 @@
     {
       "id": 1,
       "name": "admin",
+      "username": "admin",
       "password": "admin",
       "lastName": "",
       "image": "",
@@ -14,6 +15,7 @@
     {
       "id": 2,
       "name": "guest",
+      "username":  "guest",
       "password": "guest",
       "lastName": "",
       "image": "",
