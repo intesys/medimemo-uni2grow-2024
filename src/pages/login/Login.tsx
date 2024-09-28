@@ -17,25 +17,37 @@ import Medimemo from "../../assets/images/medimemo.jpg";
 import {
   validationField,
   validationForm,
-} from "../../utils/validationSchema.js";
+} from "../../utils/validationSchema.ts";
 import { useNavigate } from "react-router-dom";
+
+interface IUser {
+  id?: number;
+  name?: string;
+  username?: string;
+  password?: string;
+  lastName?: string;
+  image?: string;
+  allergies?: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+}
 
 function Login() {
   const navigate = useNavigate();
   const [errorConnection, setErrorConnection] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [login, setLogin] = useState({
+  let user: IUser = {
     username: "",
     password: "",
-  });
+  };
 
-  const [error, setError] = useState({
-    username: "",
-    password: "",
-  });
+  const [login, setLogin] = useState(user);
 
-  const handleChange = (event) => {
+  const [error, setError] = useState(user);
+
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
     const error = validationField(name, value);
     if (!error) {
@@ -62,18 +74,18 @@ function Login() {
     });
   };
 
-  const handlerSubmit = async (e) => {
+  const handlerSubmit = async (e: any) => {
     try {
       e.preventDefault();
       handleClick();
-      const errors = validationForm(login);
+      const errors:IUser = validationForm(login);
 
       if (Object.keys(errors).length === 0) {
         const result = await fetch("http://localhost/users");
         const data = await result.json();
-        const userData = data.find(
-          (user) =>
-            user.username === login.username && user.password === login.password
+        const userData: IUser = data.find(
+          (item:IUser) =>
+            item.username === login.username && item.password === login.password
         );
         if (userData) {
           setErrorConnection("");
@@ -81,7 +93,6 @@ function Login() {
           console.log(userData);
         } else {
           setErrorConnection("Username or password are incorrect");
-          console.log(userData);
         }
       } else {
         setError(errors);

@@ -1,7 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, redirect } from "react-router-dom";
 import Login from "./pages/login/Login";
-import { Dashboard } from "./pages/dashboard/dashboard";
+import { Dashboard } from "./pages/dashboard/Dashboard";
+import { Therapie } from "./pages/therapie/Therapie";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/therapie",
+    element: <Therapie />,
   }
 ]);
 
