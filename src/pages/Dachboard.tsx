@@ -1,9 +1,8 @@
 
-
 function Dachboard() {
   return (
     <div>
-            hello word
+            <p> Dashbord</p>
     </div>
   )
 }

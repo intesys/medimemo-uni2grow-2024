@@ -1,43 +1,59 @@
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Button, Link, TextField, Typography, Card, Snackbar, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from "react-router-dom";
+import { validateForm, validationField } from "../../utils/Validation";
+
 import "./Login.css";
 import logoImage from "../../assets/login-img/logo.jpeg";
 import MeduimImage from "../../assets/login-img/medimemo.jpeg";
 import facebook from "../../assets/login-img/facebook.jpeg";
 import google from "../../assets/login-img/google.png";
 import iphone from "../../assets/login-img/apple.png";
-import React, { useState } from "react";
-import { validateForm, validationField } from "../../utils/Validation";
-import { useNavigate } from "react-router-dom";
+
+// Define types for credentials
+interface Credentials {
+  username: string;
+  password: string;
+}
+
+//difine types for errors
+interface Errors {
+  username?: string;
+  password?: string;
+}
 
 function Login() {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({
+
+  // Definition du state avec son type
+  const [credentials, setCredentials] = useState<Credentials>({
     username: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<Errors>({
     username: "",
-    password: "",
+    password:"",
   });
 
-  const [open, setOpen] = useState(false); // Snackbar open state
-  const [snackbarMessage, setSnackbarMessage] = useState(""); // Message for the Snackbar
+  const [open, setOpen] = useState<boolean>(false); // Snackbar open state
+  const [snackbarMessage, setSnackbarMessage] = useState<string>(""); // Message for the Snackbar
 
-
-  const handleClose = (event, reason) => {
+  // Handle close for Snackbar
+  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
 
-  const handleChange = (e) => {
+  // Handle input change with proper event typing
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
     const value = e.target.value;
     const error = validationField(fieldName, value);
-    //const isvalid = isNoEmpty(value);
+
     if (!error) {
       setErrors((prevState) => ({ ...prevState, [fieldName]: "" }));
     } else {
@@ -49,19 +65,19 @@ function Login() {
     });
   };
 
-  const handleLogin = async (e) => {
+  // Handle login submission
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       const errors = validateForm(credentials);
       if (Object.keys(errors).length === 0) {
-        const result = await fetch(
-          "http://localhost:3000/users"
-        );
+        const result = await fetch("http://localhost:3000/users");
         const datas = await result.json();
-        console.log(datas);
-        setCredentials({ username: "", password: "" });
+
         const userFound = datas.find(
-          (user) => user.username === credentials.userName && user.password === credentials.password
+          (user: { userName: string; password: string }) => 
+            user.userName === credentials.username && 
+            user.password === credentials.password
         );
 
         if (userFound) {
@@ -70,15 +86,15 @@ function Login() {
           navigate("/dashboard");
         } else {
           console.log("Invalid username or password");
-          setErrors({ username: "Username not found" });
+          setErrors({ username: "Username not found", password: "" });
           setSnackbarMessage("Invalid username or password");
           setOpen(true);
         }
       } else {
         setErrors(errors);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+     
     }
   };
 
@@ -110,14 +126,10 @@ function Login() {
                   sx={{ width: "80%" }}
                   onChange={handleChange}
                   name="username"
-                  //onBlur={validateForm}
                   error={!!errors.username}
                   helperText={errors.username}
                 />
               </div>
-              {/*   {errors.username && (
-                    <div className="error">{errors.username}</div>
-                  )} */}
               <div className="textfielddiv">
                 <TextField
                   id="outlined-basic"
@@ -128,16 +140,11 @@ function Login() {
                   value={credentials.password}
                   sx={{ width: "80%" }}
                   onChange={handleChange}
-                  // onBlur={validateForm}
                   name="password"
                   error={!!errors.password}
                   helperText={errors.password}
                 />
               </div>
-
-              {/* {errors.password && (
-                    <div className="error">{errors.password}</div>
-                  )} */}
             </div>
             <div className="divforgot">
               <Typography>
@@ -163,7 +170,7 @@ function Login() {
               <Typography sx={{ display: "flex", justifyContent: "center" }}>
                 Dont have an account?
                 <span>
-                  <Typography>
+                  <Typography component="span">
                     <Link sx={{ color: "red" }}>Sign up!</Link>
                   </Typography>
                 </span>
@@ -201,7 +208,7 @@ function Login() {
                   display: "flex",
                 }}
               >
-                <img width={30} height={30} alt="goofle" src={google} />
+                <img width={30} height={30} alt="google" src={google} />
               </Card>
               <Card
                 sx={{
@@ -218,22 +225,19 @@ function Login() {
           </div>
         </form>
         <Snackbar
-          
           open={open}
           autoHideDuration={6000}
           onClose={handleClose}
           message={snackbarMessage}
-          security="error"
           action={
             <IconButton size="small" color="inherit" onClick={handleClose}>
               <CloseIcon fontSize="small" />
             </IconButton>
           }
-          
         />
-
       </div>
     </>
   );
 }
+
 export default Login;
