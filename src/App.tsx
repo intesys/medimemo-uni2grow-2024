@@ -1,4 +1,5 @@
 import { Login } from "./pages/login/Login";
+import { Dashboard } from "./pages/dashbord/Dashboard";
 import {
   BrowserRouter as router,
   createBrowserRouter,
@@ -11,7 +12,10 @@ const routers = createBrowserRouter([
     element: <Login />,
     path: "/login",
   },
-
+  {
+    element: <Dashboard />,
+    path: "/dashboard",
+  },
   {
     path: "/",
     loader: () => redirect("/login"),

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import medimoImg from "../../assets/images/medimo.jpeg";
 import ohIcon from "../../assets/images/oh.jpeg";
 import Divider from "@mui/material/Divider";
@@ -6,7 +6,12 @@ import "./login.css";
 import AppleIcon from "@mui/icons-material/Apple";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { validateForm, validateField } from "../../utils/validationSchema.js";
+import {
+  validateForm,
+  validateField,
+  formErrors,
+  formValue,
+} from "../../utils/validationSchemat.ts";
 import { Button, Link, Typography } from "@mui/material";
 import { TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -14,15 +19,23 @@ import Alert from "@mui/material/Alert";
 
 export function Login() {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({
+  interface Users {
+    name: string;
+    password: string;
+  }
+
+  const [credentials, setCredentials] = useState<formValue>({
     username: "",
     password: "",
   });
 
-  const [submitError, setSubmitError] = useState({});
+  const [submitError, setSubmitError] = useState<formErrors>({
+    username: "",
+    password: "",
+  });
   const [login, setlogin] = useState("");
 
-  const handlerChange = (e) => {
+  const handlerChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const fieldname = e.target.name;
     const value = e.target.value;
     setCredentials((prev) => {
@@ -31,11 +44,10 @@ export function Login() {
 
     const error = validateField(fieldname, value);
     if (!error) {
-      setSubmitError((prevState) => {
-        const newState = { ...prevState };
-        delete newState[fieldname];
-        return { newState };
-      });
+      setSubmitError((prevState) => ({
+        ...prevState,
+        [fieldname]: error || "",
+      }));
     } else {
       setSubmitError((prevState) => {
         return { ...prevState, [fieldname]: error };
@@ -47,7 +59,7 @@ export function Login() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try {
       e.preventDefault();
       const errors = validateForm(credentials);
@@ -55,7 +67,7 @@ export function Login() {
         const result = await fetch("http://localhost:3001/users");
         const data = await result.json();
         const test = data.some(
-          (item) =>
+          (item: Users) =>
             credentials.username === item.name &&
             credentials.password === item.password
         );
@@ -85,7 +97,7 @@ export function Login() {
           </Typography>
           <form
             onSubmit={(e) => {
-              // cette methode permet de prevenir le comportement par defaut du formulaire
+              e.preventDefault();
               handleSubmit(e);
             }}
             className="login-form"
