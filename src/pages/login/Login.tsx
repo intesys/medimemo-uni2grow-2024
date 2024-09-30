@@ -17,37 +17,28 @@ import Medimemo from "../../assets/images/medimemo.jpg";
 import {
   validationField,
   validationForm,
-} from "../../utils/validationSchema.ts";
+  IFormValue,
+  IFormError,
+} from "../../utils/validationForm.ts";
 import { useNavigate } from "react-router-dom";
-
-interface IUser {
-  id?: number;
-  name?: string;
-  username?: string;
-  password?: string;
-  lastName?: string;
-  image?: string;
-  allergies?: string;
-  phone?: string;
-  email?: string;
-  address?: string;
-}
 
 function Login() {
   const navigate = useNavigate();
   const [errorConnection, setErrorConnection] = useState("");
   const [loading, setLoading] = useState(false);
 
-  let user: IUser = {
+  let user: IFormValue = {
     username: "",
     password: "",
   };
 
   const [login, setLogin] = useState(user);
 
-  const [error, setError] = useState(user);
+  const [error, setError] = useState<IFormError>({
+    username: "",
+    password: "",});
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     const error = validationField(name, value);
     if (!error) {
@@ -74,23 +65,22 @@ function Login() {
     });
   };
 
-  const handlerSubmit = async (e: any) => {
+  const handlerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       handleClick();
-      const errors:IUser = validationForm(login);
+      const errors:IFormError = validationForm(login);
 
       if (Object.keys(errors).length === 0) {
         const result = await fetch("http://localhost/users");
         const data = await result.json();
-        const userData: IUser = data.find(
-          (item:IUser) =>
+        const userData: IFormValue = data.find(
+          (item:IFormValue) =>
             item.username === login.username && item.password === login.password
         );
         if (userData) {
           setErrorConnection("");
-          navigate("/dashboard");
-          console.log(userData);
+          navigate("/therapie");
         } else {
           setErrorConnection("Username or password are incorrect");
         }

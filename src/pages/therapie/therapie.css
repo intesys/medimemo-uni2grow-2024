@@ -1,0 +1,54 @@
+.container-therapie{
+    width: 400px;
+    height: 650px;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    margin: 10px;
+    gap: 10px;
+}
+
+.element{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 300px;
+    height: 56px;;
+    padding-left: 15px;
+    background-color: #ECECEC;
+    border-radius: 3px;
+}
+
+.footer-therapie{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 365PX;
+    margin:  20px;
+    gap: 30px;
+    position: fixed;
+    bottom: 0px;
+    
+}
+
+.end{
+    display: flex;
+    justify-content: center;
+    gap: 85px;
+    height: 70px;
+    border-radius: 3px;
+    background-color: rgba(31, 32, 32, 0.904);
+    width: 100%;
+    color:rgba(255, 255, 255, 0.829);
+}
+
+.nav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
