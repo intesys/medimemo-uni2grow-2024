@@ -8,15 +8,15 @@ import Apple from "../../assets/images/login/apple.svg";
 import Google from "../../assets/images/login/google.svg";
 import Facebook from "../../assets/images/login/facebook.svg";
 import React, { useState } from "react";
-import { validateForm, validationField } from "../../utils/validation";
+import { Errors, LoginRequest, validateForm, validationField } from "../../utils/validation";
 
 function Login() {
     const navigate = useNavigate();
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<LoginRequest>({
         username: "",
         password: "",
     });
-    const [errors, setErrors] = useState({
+    const [errors, setErrors] = useState<Errors>({
         username: "",
         password: "",
     });
@@ -43,16 +43,13 @@ function Login() {
         if (Object.keys(errors).length === 0) {
             const result = await fetch("http://localhost:3000/users");
             const data = await result.json();
-            const test = data.some((item) => item.username === form.username && item.password === form.password);
+            const test = data.some((item: LoginRequest) => item.username === form.username && item.password === form.password);
             if (test) {
-                console.log("Login Successful");
                 navigate("/dashboard");
             } else {
                 setOpen(true);
             }
-            console.log(data);
             setForm({ username: "", password: "" });
-            // console.log(form);
         } else {
             setErrors(errors);
         }
@@ -67,7 +64,6 @@ function Login() {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpen(false);
     };
 
@@ -85,7 +81,6 @@ function Login() {
                         fullWidth
                         variant="outlined"
                         label="Email or Username"
-                        onBlur={validateForm}
                         name="username"
                         value={form.username}
                         onChange={handleChange}
@@ -97,7 +92,6 @@ function Login() {
                         label="Password"
                         type="password"
                         autoComplete="current-password"
-                        onBlur={validateForm}
                         name="password"
                         value={form.password}
                         onChange={handleChange}
