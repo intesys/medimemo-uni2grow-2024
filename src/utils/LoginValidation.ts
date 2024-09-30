@@ -1,5 +1,5 @@
 const ERRORS_MESSAGE = "This field is required";
-const iSNotEmpty = (value) => {
+const iSNotEmpty = (value:string) => {
   if (value) {
     return "";
   } else {
@@ -7,13 +7,26 @@ const iSNotEmpty = (value) => {
   }
 };
 
-const validationSchema = {
+
+ export interface FormValue {
+  [key: string]: string;
+}
+
+ export interface FormError {
+  [key: string]: string;
+}
+
+ 
+type validationType = (value: string)=> string;
+
+const validationSchema:Record<string,validationType > = {
   email: iSNotEmpty,
   password: iSNotEmpty,
 };
 
-export const validateForm = (values) => {
-  const errors = {};
+
+export const validateForm = (values:FormValue):FormError => {
+  const errors:FormError  = {};
   Object.keys(values).forEach((fieldName) => {
     const value = values[fieldName];
     const test = validationSchema[fieldName];
@@ -25,7 +38,8 @@ export const validateForm = (values) => {
   return errors;
 };
 
-export const validateField = (fieldName, value) => {
+
+export const validateField = (fieldName:string, value:string):string => {
   const test = validationSchema[fieldName];
   const error = test(value);
   return error;

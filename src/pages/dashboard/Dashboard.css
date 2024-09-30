@@ -1,26 +1,25 @@
+.panel-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  width: 390px;
+}
+.medical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .panel-profile{
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-
-    
-  }
-  .medical{
-    
-  }
-  .list{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    
-  }
-
-  .header{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-  }
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 390px;
+  padding-bottom: 20px;
+}

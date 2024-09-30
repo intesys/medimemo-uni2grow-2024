@@ -12,7 +12,17 @@ import {
 } from "@mui/material";
 import icondrugs from "../../assets/icons/pill.png";
 
-const medicines = [
+
+interface Medecine{
+  id: number;
+  time: string;
+  name: string;
+  sick:string;
+
+
+}
+
+const medicines:Medecine[] = [
   {
     id: 1,
     time: "07:00",
@@ -45,10 +55,16 @@ const medicines = [
   },
 ];
 
-export function Dashboard() {
-  const [checked, setChecked] = React.useState([]);
+interface CurrentIndex{
+  id:number;
+}
 
-  const handleToggle = (value) => () => {
+
+
+export function Dashboard() {
+  const [checked, setChecked] = React.useState<number[]>([]);
+
+  const handleToggle =  (value:Medecine => {
     const currentIndex = checked.indexOf(value.id);
     const newChecked = [...checked];
 
@@ -59,7 +75,7 @@ export function Dashboard() {
     }
 
     setChecked(newChecked);
-  };
+  };)
 
   return (
     <div className="medical">

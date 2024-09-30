@@ -14,25 +14,27 @@ import frame1 from "../../assets/icons/Frame 8.png";
 import frame2 from "../../assets/icons/Frame 11.png";
 import frame3 from "../../assets/icons/Frame 10.png";
 import { useState } from "react";
-import { validateField, validateForm } from "../../utils/LoginValidation.ts";
+import {
+  validateField,
+  validateForm,
+  FormValue,
+  FormError,
+} from "../../utils/LoginValidation.ts";
 
-interface Credentials {
+interface Users {
   email: string;
   password: string;
-}
-interface Errors {
-  [key: string]: string;
 }
 
 export function Login() {
   const navigate = useNavigate();
 
-  const [credentials, setcredentials] = useState<Credentials>({
+  const [credentials, setcredentials] = useState<FormValue>({
     email: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState<Errors>({});
+  const [errors, setErrors] = useState<FormError>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
@@ -60,7 +62,7 @@ export function Login() {
   };
   const [logged, setLogged] = useState<string>("");
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -73,23 +75,24 @@ export function Login() {
 
         setLoading(false);
 
-        const user = data.find((item) => item.email);
+        const user = data.find((item: Users) => item.email && item.password);
 
-        if (user && user.email === credentials.email) {
+        if (
+          user &&
+          user.email === credentials.email &&
+          user.password === credentials.password
+        ) {
           navigate("/dashboard");
 
           setLogged("The user is successfully logged");
         } else {
-          setLogged("The Email or Username and Password are incorrect");
+          setLogged("Email or username and PassWord are incorect!!!");
         }
-
-        console.log(data);
       } else {
         setErrors(result);
       }
     } catch (e) {
       setLoading(false);
-      console.error(e);
     }
   };
 
@@ -110,14 +113,13 @@ export function Login() {
               id="text"
               name="email"
               value={credentials.email}
-              label="Email or Username"
+              label="Email or username"
               variant="outlined"
               onChange={handleChange}
               helperText={errors.email}
               error={!!errors.email}
               // onAbort={ErrorEvent}
             />
-
             <TextField
               id="textfield"
               label="Password"
@@ -129,11 +131,9 @@ export function Login() {
               onChange={handleChange}
               error={!!errors.password}
             />
-
             <Typography textAlign="right">
               <Link>Forgot password</Link>
             </Typography>
-
             <Button
               className="login"
               variant="contained"
@@ -142,17 +142,17 @@ export function Login() {
               color="error"
               sx={{ backgroundColor: "#F00" }}
               type="submit"
-              startIcon={loading && logged && <CircularProgress size={20} />}
+              startIcon={loading && <CircularProgress size={20} /> && logged}
               onClick={() => {
                 if (
-                  logged === "The Email or Username and Password are incorrect"
+                  logged === "Email or username and PassWord are incorect!!!"
                 ) {
                   setLogged("");
                 }
               }}
             >
               Login
-            </Button>
+            </Button>{" "}
             {logged && logged !== "" && (
               <Typography sx={{ color: "#F00" }}>{logged}</Typography>
             )}
@@ -163,9 +163,7 @@ export function Login() {
             <Link>Sign up!</Link>
           </Typography>
 
-          <Divider textAlign="center" sx={{ fontSize: 20 }}>
-            or
-          </Divider>
+          <Divider sx={{ fontSize: 20 }}>or</Divider>
           <div className="icon">
             <IconButton component={Link} href="link_url">
               <img src={frame1} alt="" />
