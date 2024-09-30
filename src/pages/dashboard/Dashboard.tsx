@@ -64,18 +64,20 @@ interface CurrentIndex{
 export function Dashboard() {
   const [checked, setChecked] = React.useState<number[]>([]);
 
-  const handleToggle =  (value:Medecine => {
-    const currentIndex = checked.indexOf(value.id);
+  const handleToggle =  (medecineId:Medecine
+    
+  ) => {
+    const currentIndex = checked.indexOf(medecineId.id);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value.id);
+      newChecked.push(medecineId.id);
     } else {
       newChecked.splice(currentIndex, 1);
     }
 
     setChecked(newChecked);
-  };)
+  };
 
   return (
     <div className="medical">
