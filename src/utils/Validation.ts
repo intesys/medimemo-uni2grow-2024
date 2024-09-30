@@ -21,7 +21,9 @@ export const validateField = (fieldName: string, value: string) => {
 };
 
 // Validate the entire form
-export const validateForm = (credential: Credentials): Record<string, string> => {
+export const validateForm = (
+  credential: Credentials
+): Record<string, string> => {
   const errors: Record<string, string> = {};
   if (isEmpty(credential.username)) {
     errors.username = "Username is required";
@@ -33,15 +35,3 @@ export const validateForm = (credential: Credentials): Record<string, string> =>
   // Return the errors object
   return errors;
 };
-
-// Check the values of the inputs textFields matches
-//with the objects iside our fetched data
-
-// export const checkInfo = (credentials) => {
-//   {data.map((item) =>
-//       if(credentials.username === item.username) {
-//         console.log( "succesfull");
-//       }
-//    );
-//   }
-// }

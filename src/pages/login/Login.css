@@ -88,3 +88,7 @@
   .wronguser {
     color: firebrick;
   }
+
+  .custom-link {
+    color: red;
+  }

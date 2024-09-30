@@ -1,39 +1,51 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import "./Login.css";
 import {
   Button,
   TextField,
   Typography,
-  Link,
   IconButton,
   CircularProgress,
   Divider,
+  Alert,
 } from "@mui/material";
 
 // import des images du logo
 import mediMemoImg from "../../assets/images/MEDIMEMO.png";
 import ohImg from "../../assets/images/Group.png";
 
-// import pour les icones a la page de login
+// import pour les icones à la page de login
 import frame1 from "../../assets/icons/Frame 1.png";
 import frame2 from "../../assets/icons/Frame 2.png";
 import frame3 from "../../assets/icons/Frame 3.png";
 
 // Import validation functions
 import { validateForm, validateField } from "../../utils/Validation";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-// Le corps meme du composant
+// Définir les types des objets
+interface Credentials {
+  username: string;
+  password: string;
+}
+
+interface Errors {
+  username?: string;
+  password?: string;
+}
+
+// Le corps même du composant
 export function Login() {
-  const [credentials, setCredentials] = useState({
+  const [credentials, setCredentials] = useState<Credentials>({
     username: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Errors>({});
+  const [showAlert, setShowAlert] = useState(false);
 
   // Handle form field changes
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
     const value = e.target.value;
 
@@ -41,7 +53,6 @@ export function Login() {
       ...prevState,
       [fieldName]: value,
     }));
-    setLogged("");
 
     // Validate the specific field on change
     const errorMessage = validateField(fieldName, value);
@@ -49,47 +60,42 @@ export function Login() {
       ...prevErrors,
       [fieldName]: errorMessage,
     }));
+
+    // Hide the alert if the username or the password is updated
+    if (fieldName === "username" || fieldName === "password") {
+      setShowAlert(false);
+    }
   };
 
-  // Handle form submission
-
-  const [logged, setLogged] = useState("");
-
-  // to disable the login button after the first submit click
-  const [loading, setLoading] = useState(false);
+  const [logged, setLogged] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Pour la navigation
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const formErrors = validateForm(credentials);
-      // setErrors(formErrors);
 
-      // Check if form has no errors before submitting
       if (Object.keys(formErrors).length === 0) {
-        setLoading(true); // lock the button here
+        setLoading(true);
 
         const result = await fetch("http://localhost:3000/users");
         const data = await result.json();
 
-        setLoading(false); // unlock the button here
-
-        // comparing if the username is matching for
-        // person
+        setLoading(false);
 
         const user = data.find(
-          (item) =>
-            item.username == credentials.username &&
-            item.password == credentials.password
+          (item: { username: string; password: string }) =>
+            item.username === credentials.username &&
+            item.password === credentials.password
         );
         if (user) {
-          setLogged("succesfull user login !!!");
-
-          navigate("/dashboard"); // Navigation
+          setLogged("successful user login !!!");
+          navigate("/dashboard");
         } else {
-          setLogged("Wrong Username or password, please check it again!");
+          setShowAlert(true);
         }
 
         console.log(data);
@@ -97,7 +103,7 @@ export function Login() {
         setErrors(formErrors);
       }
     } catch (e) {
-      setLoading(false); // unlock the button here
+      setLoading(false);
       console.error(e);
     }
   };
@@ -119,16 +125,21 @@ export function Login() {
           </Typography>
 
           <form className="login-form" onSubmit={handleSubmit}>
+            {showAlert && (
+              <Alert severity="error" sx={{ mb: 2, backgroundColor: "red" }}>
+                Wrong Username or Password. Please try again!
+              </Alert>
+            )}
+
             <TextField
               id="username"
               label="Email or Username"
               name="username"
               value={credentials.username}
               onChange={handleChange}
-              error={!!errors.username} // Show error if validation fails
-              helperText={errors.username} // Show error message
+              error={!!errors.username}
+              helperText={errors.username}
               variant="outlined"
-              // required
             />
 
             <TextField
@@ -138,19 +149,17 @@ export function Login() {
               value={credentials.password}
               onChange={handleChange}
               type="password"
-              error={!!errors.password} //added for the validation task
-              helperText={errors.password} //added for the validation task
+              error={!!errors.password}
+              helperText={errors.password}
               variant="outlined"
-              // required
             />
-            {/* this happen in case of wrong credentials */}
+
             <Typography className="wronguser" textAlign="left">
-              {" "}
-              {logged}{" "}
+              {logged}
             </Typography>
 
             <Typography textAlign="right">
-              <Link href="#">Forgot password?</Link>
+              <Link to="#">Forgot password?</Link>
             </Typography>
 
             <Button
@@ -166,12 +175,12 @@ export function Login() {
 
           <Typography textAlign="right">
             Don&apos;t have an account?{" "}
-            <Link href="#" sx={{ color: "red" }}>
+            <Link to="#" className="custom-link">
               Sign Up!
             </Link>
           </Typography>
 
-          <Divider size="small">or</Divider>
+          <Divider>or</Divider>
           <div className="icon">
             <IconButton component={Link} to="link_url">
               <img src={frame1} alt="" />
