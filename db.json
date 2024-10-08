@@ -67,6 +67,13 @@
       "userId": 1,
       "contact": 2,
       "notes": "this is the notes"
+    },
+    {
+      "id": "41d0",
+      "name": "expedit-therapy",
+      "userId": 1,
+      "contact": "Sarah Davis",
+      "notes": "this is just a test to validate the save action"
     }
   ],
   "contacts": [
@@ -159,7 +166,7 @@
       "therapyName": "Therapy 1",
       "time": "12h30PM",
       "date": "2024-09-20",
-      "taken": false,
+      "taken": true,
       "therapy": 1,
       "prescriptionTime": 1
     },
@@ -168,7 +175,7 @@
       "therapyName": "Therapy 2",
       "time": "12h30PM",
       "date": "2024-09-20",
-      "taken": true,
+      "taken": false,
       "therapy": 1,
       "prescriptionTime": 1
     }

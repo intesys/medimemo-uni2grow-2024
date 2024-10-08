@@ -44,6 +44,12 @@ export function AddTherapy() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  /////////////////////////////////////////
+  // For notes field
+  const [notes, setNotes] = useState<string>("");
+
+  /////////////////////////////////////////////
+
   // Regarding the therapy name
   const [therapyName, setTherapyName] = useState<string>("");
   // Handle clearing the therapy name when CancelIcon is clicked
@@ -104,11 +110,66 @@ export function AddTherapy() {
   // State to track whether the right icon is clicked
   const [isClicked, setIsClicked] = useState(false);
 
-  // Toggle click state
+  // Toggle click state on ArrowIosIcon
   const handleIconClick = () => {
     setIsClicked(!isClicked); // Toggle the state
   };
-  
+
+  // Fetch medicines and contacts
+  useEffect(() => {
+    fetch("http://localhost:3000/medicines")
+      .then((response) => response.json())
+      .then((data) => setMedecines(data))
+      .catch(() => setError("Error fetching medicines"));
+
+    fetch("http://localhost:3000/contacts")
+      .then((response) => response.json())
+      .then((data) => setContacts(data))
+      .catch(() => setError("Error fetching contacts"));
+  }, []);
+  {
+    /* Display error message */
+  }
+  {
+    error && (
+      <Typography color="error" sx={{ marginBottom: 2 }}>
+        {error}
+      </Typography>
+    );
+  }
+  // Handle therapy submission
+  const handleSaveTherapy = async () => {
+    setLoading(true);
+    try {
+      const newTherapy = {
+        name: therapyName,
+        userId: 1, // This could be the logged-in user
+        contact: selectedContacts[0], // Assuming the first selected doctor
+        notes: notes,
+      };
+
+      const response = await fetch("http://localhost:3000/therapies", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTherapy),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save therapy");
+      }
+
+      // Redirect back to the therapies page
+      navigate("/therapies");
+    } catch (error) {
+      setError("Error saving therapy");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="panell">
@@ -313,6 +374,7 @@ export function AddTherapy() {
                 defaultValue={"Write your notes here"}
                 multiline
                 rows={3}
+                onChange={(e) => setNotes(e.target.value)}
                 sx={{ width: "100%" }}
               />
             </div>
@@ -325,7 +387,7 @@ export function AddTherapy() {
               <LoadingButton
                 size="small"
                 color="error"
-                onClick={() => setLoading(true)}
+                onClick={handleSaveTherapy}
                 loading={loading}
                 loadingPosition="center"
                 startIcon={<SaveIcon />}
