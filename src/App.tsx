@@ -4,6 +4,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Layout } from "./components/layout/Layout.tsx";
+import Profile from "./pages/profile/Profile";
 import Contacts from "./pages/contacts/Contacts.tsx";
 import Login from "./pages/login/Login";
 import { Therapies } from "./pages/therapies/Therapies.tsx";
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     loader: () => redirect("/login"),
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 
   {
