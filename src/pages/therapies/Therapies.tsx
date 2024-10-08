@@ -6,6 +6,7 @@ import SearchIcon from "../../assets/images/therapie/Icon.png";
 import forwardIcon from "../../assets/images/therapie/arrow_forward_ios.png";
 import { Therapie } from "../../models/Therapie";
 import Header from "../../components/header/Header";
+import { Outlet, useLocation } from "react-router-dom";
 
 export function Therapies() {
   const [therapies, setTherapies] = useState<Therapie[]>([]);
@@ -37,81 +38,89 @@ export function Therapies() {
     return error === "";
   }
 
+  // Only render Therapies content if we are at the base path /therapies
+  const location = useLocation();
+  const isTherapiesBasePath = location.pathname === "/therapies";
+
   return (
     <>
       <Header title="My Therapies" />
-      <div className="therapies-container">
-        <div className="searchContainer">
-          <Paper
-            component="div"
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: "90%",
-              borderRadius: 20,
-              backgroundColor: "#FFEFEF",
-              maxHeight: 300,
-            }}
-          >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search theraphy"
-              inputProps={{ "aria-label": "search therapy" }}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <img src={SearchIcon} alt="search icon" />
-            </IconButton>
-          </Paper>
+      {isTherapiesBasePath ? (
+        <div className="therapies-container">
+          <div className="searchContainer">
+            <Paper
+              component="div"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: "90%",
+                borderRadius: 20,
+                backgroundColor: "#FFEFEF",
+                maxHeight: 300,
+              }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search theraphy"
+                inputProps={{ "aria-label": "search therapy" }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <img src={SearchIcon} alt="search icon" />
+              </IconButton>
+            </Paper>
 
-          <div className="listContact">
-            {!isNull(error) ? (
-              <Typography sx={{ color: "red" }}>{error}</Typography>
-            ) : emptyTherapies(therapies) ? (
-              <Typography>No therapy available</Typography>
-            ) : (
-              filteredTherapies.map((therapie: Therapie) => (
-                <Paper
-                  key={therapie.id}
-                  component="form"
-                  sx={{
-                    p: "2px 4px",
-                    display: "flex",
-                    width: "90%",
-                    justifyContent: "space-between",
-                    backgroundColor: "#F4F4F4",
-                    paddingTop: 1.5,
-                    paddingBottom: 1.5,
-                  }}
-                >
-                  <div className="therapyName">
-                    <Typography
-                      sx={{ fontSize: 17, fontWeight: 700 }}
-                      className="typography1"
-                    >
-                      {therapie.name}
-                    </Typography>
-                  </div>
-
-                  <IconButton
-                    type="button"
-                    sx={{ p: "10px" }}
-                    aria-label="arrowBack"
+            <div className="listContact">
+              {!isNull(error) ? (
+                <Typography sx={{ color: "red" }}>{error}</Typography>
+              ) : emptyTherapies(therapies) ? (
+                <Typography>No therapy available</Typography>
+              ) : (
+                filteredTherapies.map((therapie: Therapie) => (
+                  <Paper
+                    key={therapie.id}
+                    component="form"
+                    sx={{
+                      p: "2px 4px",
+                      display: "flex",
+                      width: "90%",
+                      justifyContent: "space-between",
+                      backgroundColor: "#F4F4F4",
+                      paddingTop: 1.5,
+                      paddingBottom: 1.5,
+                    }}
                   >
-                    <img src={forwardIcon} alt="arrowBack icon" />
-                  </IconButton>
-                </Paper>
-              ))
-            )}
+                    <div className="therapyName">
+                      <Typography
+                        sx={{ fontSize: 17, fontWeight: 700 }}
+                        className="typography1"
+                      >
+                        {therapie.name}
+                      </Typography>
+                    </div>
+
+                    <IconButton
+                      type="button"
+                      sx={{ p: "10px" }}
+                      aria-label="arrowBack"
+                    >
+                      <img src={forwardIcon} alt="arrowBack icon" />
+                    </IconButton>
+                  </Paper>
+                ))
+              )}
+            </div>
+          </div>
+
+          <div className="addContainer">
+            <img src={addIcon} alt="add icon" />
           </div>
         </div>
-
-        <div className="addContainer">
-          <img src={addIcon} alt="add icon" />
-        </div>
-      </div>
+      ) : (
+        <Outlet />
+      )}
     </>
   );
 }
