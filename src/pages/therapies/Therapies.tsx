@@ -1,3 +1,5 @@
+import * as React from "react";
+import { FabButton } from "../../components/fabButton/FabButton";
 import { useState, useEffect } from "react";
 import "./Therapies.css";
 import { Typography, IconButton, InputBase, Paper } from "@mui/material";
@@ -51,7 +53,7 @@ export function Therapies() {
               width: "90%",
               borderRadius: 20,
               backgroundColor: "#FFEFEF",
-              maxHeight: 300,
+              maxHeight: 300
             }}
           >
             <InputBase
@@ -83,7 +85,7 @@ export function Therapies() {
                     justifyContent: "space-between",
                     backgroundColor: "#F4F4F4",
                     paddingTop: 1.5,
-                    paddingBottom: 1.5,
+                    paddingBottom: 1.5
                   }}
                 >
                   <div className="therapyName">
@@ -94,7 +96,6 @@ export function Therapies() {
                       {therapie.name}
                     </Typography>
                   </div>
-
                   <IconButton
                     type="button"
                     sx={{ p: "10px" }}
@@ -107,11 +108,8 @@ export function Therapies() {
             )}
           </div>
         </div>
-
-        <div className="addContainer">
-          <img src={addIcon} alt="add icon" />
-        </div>
       </div>
+      <FabButton />
     </>
   );
 }

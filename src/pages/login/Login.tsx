@@ -4,7 +4,7 @@ import {
   Card,
   Link,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -18,7 +18,7 @@ import {
   formError,
   formValues,
   validateForm,
-  validationField,
+  validationField
 } from "../../utils/Validation";
 import "./Login.css";
 
@@ -27,12 +27,12 @@ function Login() {
 
   const [credentials, setCredentials] = useState<formValues>({
     username: "",
-    password: "",
+    password: ""
   });
 
   const [errors, setErrors] = useState<formError>({
     username: "",
-    password: "",
+    password: ""
   });
   interface Users {
     username: "";
@@ -49,12 +49,12 @@ function Login() {
 
     setErrors((prevState) => ({
       ...prevState,
-      [fieldName]: error || "",
+      [fieldName]: error || ""
     }));
 
     setCredentials((prevState) => ({
       ...prevState,
-      [fieldName]: value,
+      [fieldName]: value
     }));
   };
 
@@ -73,7 +73,7 @@ function Login() {
         );
         if (isValidUser) {
           setCredentials({ username: "", password: "" });
-          navigate("/medications");
+          navigate("/dashboard");
         } else {
           setSnackbarMessage("Email or password incorrect");
           setOpenSnackbar(true);

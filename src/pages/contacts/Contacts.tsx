@@ -8,6 +8,7 @@ import arrowBack from "../../assets/images/contact/arrow_forward_ios.svg";
 import stethoscope from "../../assets/images/contact/stethoscope.svg";
 import { IContact } from "../../models/Contact";
 import Header from "../../components/header/Header";
+import { FabButton } from "../../components/fabButton/FabButton";
 
 function Contacts() {
   const [contacts, setContacts] = useState<IContact[]>([]);
@@ -129,10 +130,9 @@ function Contacts() {
         </div>
 
 
-        <div className="addContainer">
-          <img src={add} alt="add icon" />
-        </div>
+        
       </div>
+      <FabButton path="/addEditContact" />
     </>
   );
 }

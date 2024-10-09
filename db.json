@@ -27,43 +27,15 @@
   ],
   "therapies": [
     {
-      "id": 1,
-      "name": "Cunjunctivitis",
+      "id": "1",
+      "name": "Therapy 1",
       "userId": 1,
       "contact": 2,
       "notes": "this is the notes"
     },
     {
-      "id": 2,
-      "name": "Muscle pain",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": 3,
-      "name": "headache",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": 4,
-      "name": "Foot pains",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": 5,
-      "name": "Stomach pain",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": 6,
-      "name": "Backs pains",
+      "id": "2",
+      "name": "Therapy 2",
       "userId": 1,
       "contact": 2,
       "notes": "this is the notes"
@@ -119,6 +91,172 @@
       "address": "Yaounde, Cameroun",
       "profession": "Cardiologist",
       "notes": ""
+    },
+    {
+      "id": "7839",
+      "name": "Nkemenyi hema ",
+      "notes": "_i_iikiuèuuè",
+      "qualification": "",
+      "profession": "pediatre",
+      "phone": "2094830",
+      "email": "hemaserenankemenyi@gmail.com",
+      "address": "kkkkjhiuehfiu",
+      "adress": "j"
+    },
+    {
+      "id": "497e",
+      "name": "Nkemenyi hema ",
+      "notes": "",
+      "qualification": "",
+      "profession": "pediatre",
+      "phone": "2094830",
+      "email": "hemaserenankemenyi@gmail.com",
+      "address": "kkkkjhiuehfiu",
+      "adress": "j"
+    },
+    {
+      "id": "9881",
+      "name": "hkhkhj",
+      "notes": "jhjkn",
+      "qualification": "",
+      "profession": "hjhhklj",
+      "phone": "123445566",
+      "email": "hjkkl@gmail.com",
+      "address": "ijjjo"
+    },
+    {
+      "id": "4da7",
+      "name": "Nkemenyi hema ",
+      "notes": "_i_iikiuèuuè",
+      "qualification": "",
+      "profession": "",
+      "phone": "",
+      "email": "hemaserenankemenyi@gmail.com",
+      "address": ""
+    },
+    {
+      "id": "8fc5",
+      "name": "Nkemenyi hema ",
+      "notes": "k,nlkijl",
+      "qualification": "",
+      "profession": "nbnhb,k",
+      "phone": "24344",
+      "email": "hemaserenankemenyi@gmail.com",
+      "address": "kopkpoj",
+      "adress": "v"
+    },
+    {
+      "id": "380c",
+      "name": "lkemf",
+      "notes": "klejgieo",
+      "qualification": "Dr",
+      "profession": "nk",
+      "phone": "1231",
+      "address": "ilosufj"
+    },
+    {
+      "id": "9b76",
+      "name": "hnjjkh",
+      "notes": "",
+      "qualification": "Dr",
+      "profession": "",
+      "phone": "",
+      "address": ""
+    },
+    {
+      "id": "fb97",
+      "name": "lmk,m",
+      "notes": "",
+      "qualification": "Dr",
+      "profession": ";,knkl",
+      "phone": "",
+      "address": ""
+    },
+    {
+      "id": "4e90",
+      "name": "mùplsdqe^ù",
+      "notes": "?.AENCOL",
+      "qualification": "Dr",
+      "profession": "soji",
+      "phone": "232984",
+      "address": "?N?KLJEA"
+    },
+    {
+      "id": "8c16",
+      "name": "Lena",
+      "notes": "jijdoiez iojfezo ofijherf pozfkjé jféo jjpizjfzifp poijjfp\"'fj  fgo'z\"jj",
+      "qualification": "Dr",
+      "profession": "gynachologist",
+      "phone": "6",
+      "address": "Yaounde"
+    },
+    {
+      "id": "b179",
+      "name": "lk,x;kz",
+      "notes": "l^p^pô",
+      "qualification": "Dr",
+      "profession": "klsjc",
+      "phone": "218774231",
+      "address": "ldknv"
+    },
+    {
+      "id": "be5c",
+      "name": "jnhjk",
+      "notes": "k;ldcozkekfpe",
+      "qualification": "Dr",
+      "profession": "mxlc,km",
+      "phone": "11111",
+      "address": "lqmsdcjk"
+    },
+    {
+      "id": "f77e",
+      "name": "Hema",
+      "notes": "ED?FZLKDNK KLDFJZ ZD NZ ZDLN KJN A J ",
+      "qualification": "Dr",
+      "profession": "pediatre",
+      "phone": "032887889989",
+      "email": "hjkkl@gmail.com",
+      "address": "C. SDL/CL"
+    },
+    {
+      "id": "859c",
+      "name": "Vanella",
+      "notes": "jijdoiez iojfezo ofijherf pozfkjé jféo jjpizjfzifp poijjfp\"'fj  fgo'z\"jj",
+      "qualification": "Dr",
+      "profession": "Dentist",
+      "phone": "321489",
+      "email": "vanella@gmail.com",
+      "address": "Amerique"
+    },
+    {
+      "id": "2453",
+      "name": "Jordan Le Grand",
+      "notes": "je dsuis trop bon ne viens pas mal avec moi ohhh",
+      "qualification": "Dr",
+      "profession": "Neurologist",
+      "phone": "3000009",
+      "email": "jordan@gmail.com",
+      "address": "Canada"
+    },
+    {
+      "id": "5a5a",
+      "name": "hema Larson",
+      "notes": "sjdhsqddc",
+      "qualification": "Dr",
+      "profession": "Neurologist",
+      "phone": "213324245325",
+      "email": "hemenyi@gmail.com",
+      "address": "seoul"
+    },
+    {
+      "id": "9e1b",
+      "name": ",;csqdnqkl",
+      "notes": "dza,jdhza",
+      "qualification": "Dr",
+      "profession": "!vl;e",
+      "phone": "2313425",
+      "email": "hjkkl@gmail.com",
+      "address": "France"
     }
   ],
   "prescriptions": [

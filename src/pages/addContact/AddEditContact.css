@@ -1,0 +1,39 @@
+.addPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+ width: 100%;
+
+}
+form{
+  height: 100%;
+}
+
+.containPanel {
+  background: #f8f4f4;
+  height: 633px;
+
+
+}
+
+.panelContact {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--Radius-sm, 8px);
+ 
+}
+
+
+.button {
+  
+  display: flex;
+  align-items: flex-end;
+  width: 370px;
+  gap: 20px;
+}
