@@ -3,6 +3,7 @@ import { ArrowBack, MoreVert } from "@mui/icons-material"
 import "./Header.css"
 import React from "react";
 
+
 export interface HeaderProps {
     title: string;
     showBackButton?: boolean;
@@ -10,15 +11,19 @@ export interface HeaderProps {
     RightButton?: React.ReactNode;
     onBackButtonClick?: () => void;
     onRightButtonClick?: () => void;
+   
 }
 
 function Header(props: HeaderProps) {
     return (
         <div className="header">
-            <Button variant="text" color="inherit" onClick={props.onBackButtonClick} disabled={!props.showBackButton}>
+            <Button variant="text" color="inherit" onClick={props.onBackButtonClick} disabled={!props.showBackButton}
+            
+            >
                 {props.showBackButton && (
                     <ArrowBack />
                 )}
+
             </Button>
             <Typography
                 sx={{
@@ -27,14 +32,23 @@ function Header(props: HeaderProps) {
                     justifyContent: "center",
                     alignItems: "center",
                     fontSize: 20,
+                    minWidth : "100px",
                     fontStyle: "normal",
-                    padding: "0px",
+                    paddingTop: "0px",
+                    fontWeight : 700,
                 }} >{props.title}</Typography>
-            <Button variant="text" color="inherit" onClick={props.onRightButtonClick} disabled={!props.showRightButton}>
+
+
+      
+          <Button variant="text" color="inherit" onClick={props.onRightButtonClick} disabled={!props.showRightButton}
+           >
                 {props.showRightButton && (
                     props.RightButton || <MoreVert />
                 )}
             </Button>
+          
+                
+            
         </div>
     )
 }

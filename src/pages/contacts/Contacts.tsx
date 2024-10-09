@@ -3,13 +3,17 @@ import "./Contacts.css";
 
 import { useEffect, useState } from "react";
 import search from "../../assets/images/contact/Icon.svg";
-import add from "../../assets/images/contact/add_circle.svg";
-import arrowBack from "../../assets/images/contact/arrow_forward_ios.svg";
+import arrowFoward from "../../assets/images/contact/arrow_forward_ios.svg";
 import stethoscope from "../../assets/images/contact/stethoscope.svg";
 import { IContact } from "../../models/Contact";
 import Header from "../../components/header/Header";
+import { FabButton } from "../../components/fabButton/FabButton";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Contacts() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -17,10 +21,27 @@ function Contacts() {
   const getContacts = async (): Promise<void> => {
     try {
       const result = await fetch("http://localhost:3000/contacts");
-      const datas: IContact[] = await result.json();
-      setContacts(datas);
+      const fetchedContacts: IContact[] = await result.json();
+  
+      // Check if there's a new contact passed through location.state
+      if (location.state && location.state.newContact) {
+        const newContact = location.state.newContact;
+  
+        // Remove the new contact from the fetched list (if it exists)
+        const updatedContacts = fetchedContacts.filter(contact => contact.id !== newContact.id);
+  
+        // Add the new contact at the top of the list
+        updatedContacts.unshift(newContact);
+  
+        // Update the state with the updated list
+        setContacts(updatedContacts);
+      } else {
+        // If no new contact, just set the fetched contacts
+        setContacts(fetchedContacts);
+      }
+  
     } catch {
-      setError("failed to load contacts");
+      setError("Failed to load contacts");
     }
   };
 
@@ -41,7 +62,6 @@ function Contacts() {
     return error === "";
   }
 
-
   return (
     <>
       <Header title="Contacts" />
@@ -56,7 +76,7 @@ function Contacts() {
               width: "90%",
               borderRadius: 20,
               backgroundColor: "#FFEFEF",
-              maxHeight: 300,
+              maxHeight: 300
             }}
           >
             <InputBase
@@ -88,7 +108,7 @@ function Contacts() {
                     justifyContent: "space-between",
                     backgroundColor: "#F4F4F4",
                     paddingTop: 1.5,
-                    paddingBottom: 1.5,
+                    paddingBottom: 1.5
                   }}
                 >
                   <IconButton
@@ -119,8 +139,11 @@ function Contacts() {
                     type="button"
                     sx={{ p: "10px" }}
                     aria-label="arrowBack"
+                    onClick={() => {
+                      navigate(`/viewContact/${contact.id}`);
+                    }}
                   >
-                    <img src={arrowBack} alt="arrowBack icon" />
+                    <img src={arrowFoward} alt="arrowFoward icon" />
                   </IconButton>
                 </Paper>
               ))
@@ -128,10 +151,7 @@ function Contacts() {
           </div>
         </div>
 
-
-        <div className="addContainer">
-          <img src={add} alt="add icon" />
-        </div>
+        <FabButton path="/addEditContact" />
       </div>
     </>
   );

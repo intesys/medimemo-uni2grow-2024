@@ -1,0 +1,41 @@
+.addPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.addContact-Container{
+  flex: 1;
+  overflow-y: auto;
+}
+
+form {
+  height: 100%;
+}
+
+.containPanel {
+  background: #f8f4f4;
+  height: 633px;
+  overflow-y: auto;
+}
+
+.panelContact {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--Radius-sm, 8px);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}

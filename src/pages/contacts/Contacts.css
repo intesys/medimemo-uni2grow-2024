@@ -3,6 +3,10 @@
   overflow-y: auto;
 }
 
+
+
+
+
 .typography {
   color: var(--Primary-text, #444);
   text-align: center;
@@ -36,13 +40,7 @@
   height: 100%;
 }
 
-.addContainer {
-  display: flex;
-  margin-top: 25px;
-  justify-content: flex-end;
-  margin-bottom: 15px;
-  flex-shrink: 0;
-}
+
 
 .contactName {
   display: flex;
