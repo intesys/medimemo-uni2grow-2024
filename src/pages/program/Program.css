@@ -1,0 +1,109 @@
+.program-container {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+  border-radius: var(--Radius-sm, 8px);
+  background: var(--Colours-White, #fff);
+}
+
+.program-container-title {
+  color: #000;
+  font-family: "Open Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 19.6px */
+  align-self: stretch;
+}
+
+.program-element {
+  display: flex;
+  padding: 18px 0px 16px 0px;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+}
+
+.element {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--Radius-sm, 8px);
+  align-self: stretch;
+}
+
+.program-start {
+  display: flex;
+  padding: var(--Radius-xs, 4px) 0px var(--Radius-xs, 4px) 16px;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: var(--Radius-xs, 4px) var(--Radius-xs, 4px) 0px 0px;
+}
+
+.program-date-content {
+  display: flex;
+  height: 48px;
+  padding: var(--Radius-xs, 4px) 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1 0 0;
+}
+
+.program-date-content-typography {
+  color: var(--Text-input, #b3b3b3);
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.5px;
+}
+
+.program-often {
+  display: flex;
+  width: 50%;
+  padding: 18px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: var(--Radius-xs, 4px);
+  border: 1px solid var(--Colours-Grey-2, #e6e6e6);
+}
+
+.program-often-typography {
+  color: var(--Text-input, #b3b3b3);
+  font-family: "Open Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  flex: 1 0 0;
+}
+
+.add-often {
+  display: flex;
+  padding: 10px 10px 10px 16px;
+  flex-direction: row;
+  width: 50%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  border-radius: var(--Radius-xs, 4px);
+  border: 1px dashed var(--Primary-text, #444);
+}
+
+.add-often-typography {
+  color: var(--Primary-text, #444);
+  font-family: "Open Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  text-transform: uppercase;
+}
