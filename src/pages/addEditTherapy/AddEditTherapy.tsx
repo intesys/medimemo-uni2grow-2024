@@ -1,7 +1,7 @@
-function AddEditTherapie(){
+function AddEditTherapy(){
     return (
         <div>Add and Edit thérapie</div>
     );
 }
 
-export default AddEditTherapie;
+export default AddEditTherapy;

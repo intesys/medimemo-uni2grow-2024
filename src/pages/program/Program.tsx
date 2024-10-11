@@ -1,3 +1,5 @@
+import './Program.css';
+
 function Program(){
     return (
         <div>Page Program</div>

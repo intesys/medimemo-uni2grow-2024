@@ -1,7 +1,7 @@
-function TherapieDetails(){
+function TherapyDetails(){
     return (
         <div>Details de la thérapie</div>
     );
 }
 
-export default TherapieDetails;
+export default TherapyDetails;

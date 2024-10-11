@@ -4,8 +4,8 @@ import Login from "./pages/login/Login";
 
 import Medications from "./pages/medications/Medications.tsx"
 import MedicationDetails from "./pages/medicationDetails/MedicationDetails.tsx";
-import AddEditTherapie from "./pages/addEditTherapie/AddEditTherapie.tsx";
-import TherapieDetails from "./pages/therapieDetails/TherapieDetails.tsx";
+import AddEditTherapy from "./pages/addEditTherapy/AddEditTherapy.tsx";
+import TherapyDetails from "./pages/therapyDetails/TherapyDetails.tsx";
 import Contacts from "./pages/contacts/Contacts.tsx";
 import AddEditContact from "./pages/addEditContact/AddEditContact.tsx";
 import DoctorDetails from "./pages/doctorDetails/DoctorDetails.tsx";
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "",
-                element: <AddEditTherapie />,
+                element: <AddEditTherapy />,
               },
               {
                 path: "program",
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "",
-                element: <AddEditTherapie />,
+                element: <AddEditTherapy />,
               },
               {
                 path: "program",
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
           },
           {
             path: "details",
-            element: <TherapieDetails />,
+            element: <TherapyDetails />,
           },
         ],
       },
