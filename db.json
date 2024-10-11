@@ -53,20 +53,6 @@
       "userId": 1,
       "contact": 2,
       "notes": "this is the notes"
-    },
-    {
-      "id": "5",
-      "name": "Stomach pain",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": "6",
-      "name": "Backs pains",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
     }
   ],
   "contacts": [
@@ -128,6 +114,27 @@
       "medicine": 2,
       "dateFrom": "2024-09-19",
       "dateTo": "2024-10-30"
+    },
+    {
+      "id": "2",
+      "therapy": 1,
+      "medicine": 1,
+      "dateFrom": "2024-09-19",
+      "dateTo": "2024-10-30"
+    },
+    {
+      "id": "3",
+      "therapy": 2,
+      "medicine": 2,
+      "dateFrom": "2024-09-19",
+      "dateTo": "2024-10-30"
+    },
+    {
+      "id": "4",
+      "therapy": 2,
+      "medicine": 3,
+      "dateFrom": "2024-09-19",
+      "dateTo": "2024-10-30"
     }
   ],
   "prescriptiontimes": [
@@ -138,12 +145,12 @@
   ],
   "medicines": [
     {
-      "id": "5",
+      "id": "3",
       "name": "Paracetamol",
       "leaflet": ""
     },
     {
-      "id": "6",
+      "id": "2",
       "name": "Metronidazol",
       "leaflet": ""
     },

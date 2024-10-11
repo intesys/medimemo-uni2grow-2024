@@ -1,7 +1,7 @@
-export interface Therapie {
+export interface ITherapy {
   id: number;
   name: string;
   userId: number;
   contact: number;
-  notes: string;
+  notes?: string;
 }

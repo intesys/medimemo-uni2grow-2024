@@ -9,7 +9,7 @@ export interface HeaderProps {
     showRightButton?: boolean;
     RightButton?: React.ReactNode;
     onBackButtonClick?: () => void;
-    onRightButtonClick?: () => void;
+    onRightButtonClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 function Header(props: HeaderProps) {

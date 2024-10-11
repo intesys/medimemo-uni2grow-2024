@@ -6,6 +6,7 @@ import Medications from "./pages/medications/Medications.tsx"
 import MedicationDetails from "./pages/medicationDetails/MedicationDetails.tsx";
 import AddEditTherapy from "./pages/addEditTherapy/AddEditTherapy.tsx";
 import TherapyDetails from "./pages/therapyDetails/TherapyDetails.tsx";
+
 import Contacts from "./pages/contacts/Contacts.tsx";
 import AddEditContact from "./pages/addEditContact/AddEditContact.tsx";
 import DoctorDetails from "./pages/doctorDetails/DoctorDetails.tsx";
@@ -13,6 +14,7 @@ import Profil from "./pages/profil/Profil.tsx";
 import Program from "./pages/program/Program.tsx";
 import { Therapies } from "./pages/therapies/Therapies.tsx";
 import ModalPrescription from "./components/modalPrescription/ModalPrescription.tsx";
+
 
 const router = createBrowserRouter([
   {

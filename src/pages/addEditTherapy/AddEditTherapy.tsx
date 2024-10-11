@@ -1,7 +1,16 @@
+import React, {useEffect} from "react";
+import  {useLocation} from "react-router-dom"
 function AddEditTherapy(){
-    return (
-        <div>Add and Edit thérapie</div>
+    const location = useLocation();
+    // const {therapy, doctor, medicines} = location.state;
+   
+
+    return(
+        <>
+        <div>Add/Edit Therapy</div>
+        </>
     );
 }
 
 export default AddEditTherapy;
+
