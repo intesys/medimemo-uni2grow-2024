@@ -18,7 +18,7 @@ export function Therapies() {
   useEffect(() => {
     const getTherapies = async (): Promise<void> => {
       try {
-        const response = await fetch("http://localhost:3000/therapies");
+        const response = await fetch("http://localhost:80/therapies");
         const data: ITherapy[] = await response.json();
         setTherapies(data);
       } catch {

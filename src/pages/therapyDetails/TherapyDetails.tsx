@@ -13,7 +13,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Header from "../../components/header/Header";
 import stethoscope from "../../assets/images/contact/stethoscope.svg";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Close, Edit, ErrorOutline, ArrowBackIos} from "@mui/icons-material";
+import { Close, Edit, ErrorOutline, ArrowBackIos } from "@mui/icons-material";
 import { ITherapy } from "../../models/Therapy";
 import { IMedicine } from "../../models/Medicine";
 import { IPrescription } from "../../models/Prescription";
@@ -46,7 +46,7 @@ function TherapyDetails() {
     contact: 0,
   });
   const [error, setError] = useState<string>("");
-  const [prescriptions, setPrescriptions] = useState<IPrescription[]>([]);
+  // const [prescriptions, setPrescriptions] = useState<IPrescription[]>([]);
   const [doctor, setDoctor] = useState<IContact>({
     id: 0,
     name: "",
@@ -65,7 +65,7 @@ function TherapyDetails() {
 
   const getTherapy = async (id: number) => {
     try {
-      const result = await fetch(`http://localhost:3000/therapies?id=${id}`);
+      const result = await fetch(`http://localhost:80/therapies?id=${id}`);
       const data = await result.json();
       setTherapy(data[0]);
       getDoctor(data[0].contact);
@@ -77,10 +77,10 @@ function TherapyDetails() {
   const getPrescriptionsWithTherapyId = async (id: number) => {
     try {
       const prescriptions = await fetch(
-        `http://localhost:3000/prescriptions?therapy=${id}`
+        `http://localhost:80/prescriptions?therapy=${id}`
       );
       const data = await prescriptions.json();
-      setPrescriptions(data);
+      
       getMedicines(data);
     } catch {
       setError("Something are wrong when prescriptions are found,try againt");
@@ -90,7 +90,7 @@ function TherapyDetails() {
   const getMedicines = async (prescript: IPrescription[]) => {
     let med: IMedicine[] = [];
     try {
-      const medicines = await fetch(`http://localhost:3000/medicines`);
+      const medicines = await fetch(`http://localhost:80/medicines`);
       const data = await medicines.json();
       prescript.forEach((item) => {
         const filtered = data.filter(
@@ -107,7 +107,7 @@ function TherapyDetails() {
 
   const getDoctor = async (id: number) => {
     try {
-      const doctor = await fetch(`http://localhost:3000/contacts?id=${id}`);
+      const doctor = await fetch(`http://localhost:80/contacts?id=${id}`);
       const data = await doctor.json();
       setDoctor(data[0]);
     } catch {
@@ -133,35 +133,38 @@ function TherapyDetails() {
 
   const handleDelete = async () => {
     try {
-        const response = await fetch(`http://localhost:3000/therapies/${therapy.id}`, {
-          method: 'DELETE', // méthode HTTP DELETE
+      const response = await fetch(
+        `http://localhost:80/therapies/${therapy.id}`,
+        {
+          method: "DELETE", // méthode HTTP DELETE
           headers: {
-            'Content-Type': 'application/json', // Spécifiez le type de contenu si nécessaire
-          }
-        });
-    
-        if (!response.ok) {
-          throw new Error(`Erreur lors de la suppression : ${response.status}`);
+            "Content-Type": "application/json", // Spécifiez le type de contenu si nécessaire
+          },
         }
-    
-        console.log('Élément supprimé avec succès');
-      } catch (error) {
-        console.error('Erreur:', error);
+      );
+
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la suppression : ${response.status}`);
       }
-      navigate(-1);
+
+      console.log("Élément supprimé avec succès");
+    } catch (error) {
+      console.error("Erreur:", error);
+    }
+    navigate(-1);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const handleMedicinesDetails = (id:number)=>{
-    navigate("/medication/details", {state: {id: id}})
-  }
+  const handleMedicinesDetails = (id: number) => {
+    navigate("/medications/details", { state: { id: id } });
+  };
 
-  const handleContact = ()=>{
-    navigate("/contacts/details", {state: {id: doctor.id}})
-  }
+  const handleContact = () => {
+    navigate("/contacts/details", { state: { id: doctor.id } });
+  };
 
   const handleEdit = () => {
     navigate("/therapies/edit", { state: { therapy, doctor, medicines } });
@@ -204,22 +207,24 @@ function TherapyDetails() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}  className="modal">
+        <Box sx={style} className="modal">
           <ErrorOutline />
-          <Typography
-            id="modal-modal-title"
-            variant="h5"
-            component="h2"
-          >
-            Deletion  Confirmation
+          <Typography id="modal-modal-title" variant="h5" component="h2">
+            Deletion Confirmation
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }} className="">
             Do you really want to delete this contact? All entered data will be
             lost and cannot be recovered.
           </Typography>
           <Box className="button-modal">
-            <Button sx={{color:"black", gap:2}} onClick={handleCloseModal}><ArrowBackIos width="24px" height="24px"/>Back</Button>
-            <Button sx={{color:"#f00", gap:2}} onClick={handleDelete}> <Close width="24px" height="24px"/> Delete</Button>
+            <Button sx={{ color: "black", gap: 2 }} onClick={handleCloseModal}>
+              <ArrowBackIos width="24px" height="24px" />
+              Back
+            </Button>
+            <Button sx={{ color: "#f00", gap: 2 }} onClick={handleDelete}>
+              {" "}
+              <Close width="24px" height="24px" /> Delete
+            </Button>
           </Box>
         </Box>
       </Modal>
@@ -227,7 +232,11 @@ function TherapyDetails() {
       <div className="details-container">
         {medicines.map((item) => {
           return (
-            <div key={item.id} className="details-element" onClick={()=>handleMedicinesDetails(item.id)}>
+            <div
+              key={item.id}
+              className="details-element"
+              onClick={() => handleMedicinesDetails(item.id)}
+            >
               <Box className="details-element-title">Medecines</Box>
               <Box className="details-element-container">
                 <Typography className="details-element-content">
