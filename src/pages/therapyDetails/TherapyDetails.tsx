@@ -106,8 +106,8 @@ function TherapyDetails() {
 
   const getDoctor = async (id: number) => {
     try {
-      const doctor = await fetch(`http://localhost:3000/contacts/${id}`);
-      const data = await doctor.json();
+      const result = await fetch(`http://localhost:3000/contacts/${id}`);
+      const data = await result.json();
       setDoctor(data);
     } catch {
       setError("Something are wrong when doctor are found, try againt");
@@ -132,36 +132,41 @@ function TherapyDetails() {
 
   const handleDelete = async () => {
     try {
-        const response = await fetch(`http://localhost:3000/therapies/${therapy.id}`, {
-          method: 'DELETE',
+      const response = await fetch(
+        `http://localhost:3000/therapies/${therapy.id}`,
+        {
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json', 
-          }
-        });
-    
-        if (!response.ok) {
-          throw new Error(`Erreur lors de la suppression : ${response.status}`);
+            "Content-Type": "application/json",
+          },
         }
-      } catch (error) {
-        console.error('Erreur:', error);
+      );
+
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la suppression : ${response.status}`);
       }
-      navigate(-1);
+    } catch (error) {
+      console.error("Erreur:", error);
+    }
+    navigate(-1);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const handleMedicinesDetails = (id:number)=>{
-    navigate("/medications/details", {state: {id: id}})
-  }
+  const handleMedicinesDetails = (id: number) => {
+    navigate("/medications/details", { state: { id: id } });
+  };
 
   const handleContact = () => {
     navigate("/contacts/details", { state: { id: doctor.id } });
   };
 
   const handleEdit = () => {
-    navigate("/therapies/edit", { state: { therapy : therapy, doctor : doctor, meds : medicines } });
+    navigate("/therapies/edit", {
+      state: { therapy: therapy, doctor: doctor, meds: medicines },
+    });
   };
   const open = Boolean(anchorEl);
   return (
@@ -247,7 +252,7 @@ function TherapyDetails() {
           <Box className="details-element-container">
             <img src={stethoscope} width="24px" height="24px" />
             <Typography className="details-element-content">
-            {doctor.qualification}. {doctor.name}
+              {doctor?.qualification}. {doctor?.name}
             </Typography>
             <ArrowForwardIosIcon width="24px" height="24px" />
           </Box>
