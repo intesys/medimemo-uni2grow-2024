@@ -9,7 +9,7 @@
     "phone": "(555) 1234-5678",
     "email": "francesca.greco@example.com",
     "address": "123 Vision Lane, Suite 200, City Ville, ST 1234567",
-    "medicalID": "GRCFNCXXXXXXXXYY"
+    "medicalID": "GRCFNCXXXXXXXXXX"
   },
   "users": [
     {
@@ -108,9 +108,30 @@
   ],
   "prescriptions": [
     {
-      "id": "2",
+      "id": "1",
       "therapy": 1,
       "medicine": 1,
+      "dateFrom": "2024-09-19",
+      "dateTo": "2024-10-30"
+    },
+    {
+      "id": "2",
+      "therapy": 1,
+      "medicine": 2,
+      "dateFrom": "2024-09-19",
+      "dateTo": "2024-10-30"
+    },
+    {
+      "id": "3",
+      "therapy": 2,
+      "medicine": 2,
+      "dateFrom": "2024-09-19",
+      "dateTo": "2024-10-30"
+    },
+    {
+      "id": "4",
+      "therapy": 2,
+      "medicine": 3,
       "dateFrom": "2024-09-19",
       "dateTo": "2024-10-30"
     }
@@ -135,7 +156,15 @@
     {
       "id": "1",
       "name": "Arthrose",
-      "leaflet": ""
+      "leaflet": "",
+      "description": "Ophthalmic solution with anti-inflammatory activity suitable for cases of eye burning and conjunctivitis.",
+      "dosage": "30 mg/tablet, 1 tablet daily",
+      "methodOfAdministraion": "- For ophtalmic use only - Shake the bottle well defore use - Tilt head back, pull down the lowed eyelid, and apply drops - Avoid touching the dropper tip to any surface, including the eye",
+      "contraindications": "none",
+      "warning": "none",
+      "sideEffects": "none",
+      "interactions": "none",
+      "storage": "room temperature"
     }
   ],
   "doses": [
@@ -145,6 +174,15 @@
       "time": "12h30PM",
       "date": "2024-09-20",
       "taken": true,
+      "therapy": 1,
+      "prescriptionTime": 1
+    },
+    {
+      "id": "2",
+      "therapyName": "Therapy 2",
+      "time": "12h30PM",
+      "date": "2024-09-20",
+      "taken": false,
       "therapy": 1,
       "prescriptionTime": 1
     }
