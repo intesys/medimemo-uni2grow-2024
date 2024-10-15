@@ -8,6 +8,7 @@ import {
   MenuItem,
   Modal,
   Button,
+  Snackbar,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Header from "../../components/header/Header";
@@ -43,12 +44,11 @@ function TherapyDetails() {
     id: 0,
     name: "",
     userId: 0,
-    contact: 0,
+    contact: "",
   });
   const [error, setError] = useState<string>("");
-  const [prescriptions, setPrescriptions] = useState<IPrescription[]>([]);
   const [doctor, setDoctor] = useState<IContact>({
-    id: 0,
+    id: "",
     name: "",
     notes: "",
     qualification: "",
@@ -80,7 +80,6 @@ function TherapyDetails() {
         `http://localhost:3000/prescriptions?therapy=${id}`
       );
       const data = await prescriptions.json();
-      setPrescriptions(data);
       getMedicines(data);
     } catch {
       setError("Something are wrong when prescriptions are found,try againt");
@@ -134,17 +133,15 @@ function TherapyDetails() {
   const handleDelete = async () => {
     try {
         const response = await fetch(`http://localhost:3000/therapies/${therapy.id}`, {
-          method: 'DELETE', // méthode HTTP DELETE
+          method: 'DELETE',
           headers: {
-            'Content-Type': 'application/json', // Spécifiez le type de contenu si nécessaire
+            'Content-Type': 'application/json', 
           }
         });
     
         if (!response.ok) {
           throw new Error(`Erreur lors de la suppression : ${response.status}`);
         }
-    
-        console.log('Élément supprimé avec succès');
       } catch (error) {
         console.error('Erreur:', error);
       }
@@ -156,7 +153,7 @@ function TherapyDetails() {
   };
 
   const handleMedicinesDetails = (id:number)=>{
-    navigate("/medication/details", {state: {id: id}})
+    navigate("/medications/details", {state: {id: id}})
   }
 
   const handleContact = ()=>{
@@ -164,7 +161,7 @@ function TherapyDetails() {
   }
 
   const handleEdit = () => {
-    navigate("/therapies/edit", { state: { therapy, doctor, medicines } });
+    navigate("/therapies/edit", { state: { therapy : therapy, doctor : doctor, meds : medicines } });
   };
   const open = Boolean(anchorEl);
   return (
@@ -257,6 +254,12 @@ function TherapyDetails() {
           </Box>
         </div>
       </div>
+      <Snackbar
+        open={!!error}
+        autoHideDuration={10000}
+        onClose={handleClose}
+        message={error}
+      />
     </>
   );
 }
