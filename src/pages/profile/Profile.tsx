@@ -14,6 +14,7 @@ import {
   Snackbar,
   Alert,
   SnackbarCloseReason,
+  SxProps,
 } from "@mui/material";
 import UserAvatar from "../../assets/images/avatar.svg";
 import UniversalCur from "../../assets/images/profile/universal_currency.svg";
@@ -140,6 +141,17 @@ const Profile = () => {
     setUser((prevForm) => ({ ...prevForm, [name]: "" }));
   };
 
+  const inputStyle: SxProps =  {
+    width: "100%",
+    "& .MuiInputBase-input.Mui-disabled": {
+      WebkitTextFillColor: "#222",
+    },
+    "& .css-1mnoz6i-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
+      {
+        borderColor: "#555",
+      },
+  }
+
   return (
     <div className="first-container">
       <Header
@@ -264,7 +276,7 @@ const Profile = () => {
                 onChange={handleChange}
                 disabled={!editable}
                 label={editable ? "Medical ID" : null}
-                sx={{ width: "100%", borderColor: "red" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
@@ -301,7 +313,7 @@ const Profile = () => {
                 label={editable ? "Allergies" : null}
                 value={user.allergies}
                 onChange={handleChange}
-                sx={{ width: "100%" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
@@ -338,12 +350,14 @@ const Profile = () => {
                 onChange={handleChange}
                 disabled={!editable}
                 label={editable ? "Phone Number" : null}
-                sx={{ width: "100%" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <PhoneOutlinedIcon />
+                        <PhoneOutlinedIcon
+                          sx={{ color: "#222", opacity: "0.9" }}
+                        />
                       </InputAdornment>
                     ),
                     endAdornment: (
@@ -372,12 +386,14 @@ const Profile = () => {
                 disabled={!editable}
                 label={editable ? "Email" : null}
                 id="outlined-start-adornment"
-                sx={{ width: "100%" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <MailOutlinedIcon />
+                        <MailOutlinedIcon
+                          sx={{ color: "#222", opacity: "0.9" }}
+                        />
                       </InputAdornment>
                     ),
                     endAdornment: (
@@ -406,11 +422,23 @@ const Profile = () => {
                 onChange={handleChange}
                 disabled={!editable}
                 label={editable ? "Address" : null}
-                sx={{ width: "100%" }}
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-input.Mui-disabled": {
+                    WebkitTextFillColor: "#222",
+                  },
+                  "& .css-ukn3g9-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#555",
+                    },
+                }}
                 slotProps={{
                   input: {
                     startAdornment: (
-                      <InputAdornment position="start">
+                      <InputAdornment
+                        position="start"
+                        sx={{ alignSelf: "start" }}
+                      >
                         <img
                           className="input-image"
                           src={Home}
