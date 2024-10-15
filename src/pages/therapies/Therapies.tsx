@@ -1,19 +1,20 @@
+
+import { FabButton } from "../../components/fabButton/FabButton";
 import { useState, useEffect } from "react";
 import "./Therapies.css";
 import { Typography, IconButton, InputBase, Paper } from "@mui/material";
-import addIcon from "../../assets/images/therapie/add_circle.png";
+
 import SearchIcon from "../../assets/images/therapie/Icon.png";
 import forwardIcon from "../../assets/images/therapie/arrow_forward_ios.png";
 import { ITherapy } from "../../models/Therapy";
 import Header from "../../components/header/Header";
 import { useNavigate } from "react-router-dom";
 
-export function Therapies() {
+export default function Therapies() {
+  const navigate = useNavigate();
   const [therapies, setTherapies] = useState<ITherapy[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [error, setError] = useState<string>("");
-
-  const navigate = useNavigate(); 
 
   useEffect(() => {
     const getTherapies = async (): Promise<void> => {
@@ -44,9 +45,7 @@ export function Therapies() {
     navigate('details', {state: {value: id}})
   }
 
-  const handleAdd = () => {
-    navigate("add");
-  }
+ 
 
   return (
     <>
@@ -119,10 +118,7 @@ export function Therapies() {
             )}
           </div>
         </div>
-
-        <div className="addContainer" onClick={handleAdd}>
-          <img src={addIcon} alt="add icon" />
-        </div>
+        <FabButton path="add" />
       </div>
     </>
   );

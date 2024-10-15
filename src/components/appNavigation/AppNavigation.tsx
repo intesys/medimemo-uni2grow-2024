@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import "./AppNavigation.css";
-import { useLocation } from "react-router-dom";
-import { IconButton, Typography, Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { IconButton, Typography } from "@mui/material";
 import { ItemNavigation, dataItem } from "../../utils/navigationData";
 
 export function AppNavigation() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [activepage, setActivePage] = useState<string>(location.pathname);
 
@@ -13,15 +14,19 @@ export function AppNavigation() {
     setActivePage(location.pathname);
   }, [location.pathname]);
 
+  const handleNavigate = (path: string ) => {
+    setActivePage(path);
+    navigate(path);
+  }
+
   return (
     <div className="menuBot">
       <div className="sub-menuBot">
         {dataItem.map((item: ItemNavigation) => (
-          <Button variant="text" color="inherit" sx={{ textTransform: "capitalize" }} href={item.path} key={item.path} >
+          <div color="inherit" onClick={() => handleNavigate(item.path)} key={item.path} >
             <div
               key={item.path}
               className="menuBottomItem"
-              onClick={() => setActivePage(item.path)}
             >
               <div
                 className={
@@ -45,8 +50,7 @@ export function AppNavigation() {
                 {item.name}
               </Typography>
             </div>
-
-          </Button>
+          </div>
         ))}
       </div>
     </div>

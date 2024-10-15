@@ -1,4 +1,16 @@
 {
+  "me": {
+    "id": "1",
+    "name": "Greco",
+    "username": "Francesca",
+    "lastName": "Francesca",
+    "image": "",
+    "allergies": "No Allergies",
+    "phone": "(555) 1234-5678",
+    "email": "francesca.greco@example.com",
+    "address": "123 Vision Lane, Suite 200, City Ville, ST 1234567",
+    "medicalID": "GRCFNCXXXXXXXXYYY"
+  },
   "users": [
     {
       "id": "1",
@@ -27,112 +39,50 @@
   ],
   "therapies": [
     {
-      "id": "1",
-      "name": "Cunjunctivitis",
+      "name": "Arythmie",
       "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": "2",
-      "name": "Muscle pain",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": "3",
-      "name": "headache",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
-    },
-    {
-      "id": "4",
-      "name": "Foot pains",
-      "userId": 1,
-      "contact": 2,
-      "notes": "this is the notes"
+      "contact": "a70e",
+      "notes": "Le coeur est important",
+      "id": "584d"
     }
   ],
   "contacts": [
     {
-      "id": "1",
-      "name": "Sarah Davis",
+      "name": "bill jordan",
+      "notes": "",
       "qualification": "Dr",
-      "phone": "+237 656585542",
-      "email": "davis@gmail.com",
-      "address": "Dschang, Cameroun",
-      "profession": "Pediatrician",
-      "notes": ""
+      "profession": "Neurologist",
+      "phone": "432142432423",
+      "email": "",
+      "address": "",
+      "id": "4f3b"
     },
     {
-      "id": "2",
-      "name": "Laura Thompson",
+      "name": "Richi le rich",
+      "notes": "",
       "qualification": "Dr",
-      "phone": "+237 674772917",
-      "email": "laura@gmail.com",
-      "address": "Douala, Cameroun",
-      "profession": "Ophthalmologist",
-      "notes": ""
+      "profession": "pharmacian",
+      "phone": "143894935",
+      "email": "richi@gmail.com",
+      "address": "",
+      "id": "7982"
     },
     {
-      "id": "3",
-      "name": "John Smith",
+      "name": "Merveil Sandra",
+      "notes": "lkeijrioezjrd ezrio\"d azadiozpa ",
       "qualification": "Dr",
-      "phone": "+237 677345741",
-      "email": "john@gmail.com",
-      "address": "Yaounde, Cameroun",
-      "profession": "Cardiologist",
-      "notes": ""
-    },
-    {
-      "id": "4",
-      "name": "John Smith",
-      "qualification": "Dr",
-      "phone": "+237 677345741",
-      "email": "john@gmail.com",
-      "address": "Yaounde, Cameroun",
-      "profession": "Cardiologist",
-      "notes": ""
-    },
-    {
-      "id": "5",
-      "name": "John Smith",
-      "qualification": "Dr",
-      "phone": "+237 677345741",
-      "email": "john@gmail.com",
-      "address": "Yaounde, Cameroun",
-      "profession": "Cardiologist",
-      "notes": ""
+      "profession": "Dentist",
+      "phone": "432142432423",
+      "email": "Jeremy@gmail.com",
+      "address": "France",
+      "id": "a70e"
     }
   ],
   "prescriptions": [
     {
       "id": "1",
-      "therapy": 1,
-      "medicine": 2,
-      "dateFrom": "2024-09-19",
-      "dateTo": "2024-10-30"
-    },
-    {
-      "id": "2",
-      "therapy": 1,
+      "therapy": "584d",
       "medicine": 1,
-      "dateFrom": "2024-09-19",
-      "dateTo": "2024-10-30"
-    },
-    {
-      "id": "3",
-      "therapy": 2,
-      "medicine": 2,
-      "dateFrom": "2024-09-19",
-      "dateTo": "2024-10-30"
-    },
-    {
-      "id": "4",
-      "therapy": 2,
-      "medicine": 3,
       "dateFrom": "2024-09-19",
       "dateTo": "2024-10-30"
     }
@@ -164,15 +114,6 @@
     {
       "id": "1",
       "therapyName": "Therapy 1",
-      "time": "12h30PM",
-      "date": "2024-09-20",
-      "taken": true,
-      "therapy": 1,
-      "prescriptionTime": 1
-    },
-    {
-      "id": "2",
-      "therapyName": "Therapy 2",
       "time": "12h30PM",
       "date": "2024-09-20",
       "taken": true,

@@ -8,6 +8,7 @@ import {
   MenuItem,
   Modal,
   Button,
+  Snackbar,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Header from "../../components/header/Header";
@@ -43,12 +44,11 @@ function TherapyDetails() {
     id: 0,
     name: "",
     userId: 0,
-    contact: 0,
+    contact: "",
   });
   const [error, setError] = useState<string>("");
-  // const [prescriptions, setPrescriptions] = useState<IPrescription[]>([]);
   const [doctor, setDoctor] = useState<IContact>({
-    id: 0,
+    id: "",
     name: "",
     notes: "",
     qualification: "",
@@ -80,7 +80,6 @@ function TherapyDetails() {
         `http://localhost:80/prescriptions?therapy=${id}`
       );
       const data = await prescriptions.json();
-      
       getMedicines(data);
     } catch {
       setError("Something are wrong when prescriptions are found,try againt");
@@ -107,9 +106,9 @@ function TherapyDetails() {
 
   const getDoctor = async (id: number) => {
     try {
-      const doctor = await fetch(`http://localhost:80/contacts?id=${id}`);
+      const doctor = await fetch(`http://localhost:3000/contacts/${id}`);
       const data = await doctor.json();
-      setDoctor(data[0]);
+      setDoctor(data);
     } catch {
       setError("Something are wrong when doctor are found, try againt");
     }
@@ -133,41 +132,36 @@ function TherapyDetails() {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:80/therapies/${therapy.id}`,
-        {
-          method: "DELETE", // méthode HTTP DELETE
+        const response = await fetch(`http://localhost:3000/therapies/${therapy.id}`, {
+          method: 'DELETE',
           headers: {
-            "Content-Type": "application/json", // Spécifiez le type de contenu si nécessaire
-          },
+            'Content-Type': 'application/json', 
+          }
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Erreur lors de la suppression : ${response.status}`);
         }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Erreur lors de la suppression : ${response.status}`);
+      } catch (error) {
+        console.error('Erreur:', error);
       }
-
-      console.log("Élément supprimé avec succès");
-    } catch (error) {
-      console.error("Erreur:", error);
-    }
-    navigate(-1);
+      navigate(-1);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const handleMedicinesDetails = (id: number) => {
-    navigate("/medications/details", { state: { id: id } });
-  };
+  const handleMedicinesDetails = (id:number)=>{
+    navigate("/medications/details", {state: {id: id}})
+  }
 
   const handleContact = () => {
     navigate("/contacts/details", { state: { id: doctor.id } });
   };
 
   const handleEdit = () => {
-    navigate("/therapies/edit", { state: { therapy, doctor, medicines } });
+    navigate("/therapies/edit", { state: { therapy : therapy, doctor : doctor, meds : medicines } });
   };
   const open = Boolean(anchorEl);
   return (
@@ -253,7 +247,7 @@ function TherapyDetails() {
           <Box className="details-element-container">
             <img src={stethoscope} width="24px" height="24px" />
             <Typography className="details-element-content">
-              {doctor.qualification}. {doctor.name}
+            {doctor.qualification}. {doctor.name}
             </Typography>
             <ArrowForwardIosIcon width="24px" height="24px" />
           </Box>
@@ -266,6 +260,12 @@ function TherapyDetails() {
           </Box>
         </div>
       </div>
+      <Snackbar
+        open={!!error}
+        autoHideDuration={10000}
+        onClose={handleClose}
+        message={error}
+      />
     </>
   );
 }

@@ -2,12 +2,14 @@ import "./Medications.css";
 import List from "@mui/material/List";
 import logo from "../../assets/images/avatar.svg";
 import Avatar from "@mui/material/Avatar";
-import { Typography } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { IDose } from "../../models/Dose";
 import ShowDose from "../../components/dose/ShowDose";
+import { useNavigate } from "react-router-dom";
 
 function Medications() {
+  const navigate = useNavigate();
   const [medications, setMedications] = useState<IDose[]>([]);
   const [checked, setChecked] = useState<IDose[]>(medications);
   const [error, setError] = useState<string>("");
@@ -74,7 +76,9 @@ function Medications() {
   return (
     <div className="medications-container">
       <div className="head-container">
+        <IconButton onClick={() => navigate("/profile")}>
         <Avatar src={logo} alt="Avatar" sx={{ width: 75, height: 75 }} />
+        </IconButton>
         <div className="title">
           <Typography variant="h6">Hi, Francesca</Typography>
           <Typography variant="subtitle1">Your Medicines Reminders for today!</Typography>

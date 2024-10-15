@@ -1,6 +1,8 @@
 .header {
+    color: #222;
     display: flex;
     justify-content: flex-start;
     gap: 10px;
     margin: 10px 0;
+  
 }

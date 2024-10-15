@@ -4,7 +4,7 @@ import {
   Card,
   Link,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -18,21 +18,24 @@ import {
   formError,
   formValues,
   validateForm,
-  validationField,
+  validationField
 } from "../../utils/Validation";
+
+import { SnackBarComponent } from "../../components/snackBarComponent/SnackBarComponent";
 import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState<boolean>(false);
 
   const [credentials, setCredentials] = useState<formValues>({
     username: "",
-    password: "",
+    password: ""
   });
 
   const [errors, setErrors] = useState<formError>({
     username: "",
-    password: "",
+    password: ""
   });
   interface Users {
     username: "";
@@ -49,12 +52,12 @@ function Login() {
 
     setErrors((prevState) => ({
       ...prevState,
-      [fieldName]: error || "",
+      [fieldName]: error || ""
     }));
 
     setCredentials((prevState) => ({
       ...prevState,
-      [fieldName]: value,
+      [fieldName]: value
     }));
   };
 
@@ -82,7 +85,7 @@ function Login() {
         setErrors(validationErrors);
       }
     } catch (error) {
-      console.error(error);
+      setLoginError(true)
     }
   };
 
@@ -92,6 +95,16 @@ function Login() {
 
   return (
     <>
+
+{loginError && (
+        <SnackBarComponent
+          open={loginError}
+          close={handleSnackbarClose}
+          severity="error"
+          message="failled submit data"
+        />
+      )}
+
       <div className="login-container">
         <div className="img">
           <img alt="title" src={oh} />
@@ -181,7 +194,7 @@ function Login() {
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  cursor: "pointer",
+                  cursor: "pointer"
                 }}
               >
                 <img width={30} height={30} alt="apple" src={a} />
@@ -194,7 +207,7 @@ function Login() {
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  cursor: "pointer",
+                  cursor: "pointer"
                 }}
               >
                 <img width={30} height={30} alt="google" src={g} />
@@ -206,7 +219,7 @@ function Login() {
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  cursor: "pointer",
+                  cursor: "pointer"
                 }}
               >
                 <img width={30} height={30} alt="facebook" src={f} />
