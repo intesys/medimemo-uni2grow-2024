@@ -174,7 +174,6 @@ function AddEditTherapy() {
             );
           } else {
             const newTherapy: ITherapy = {
-              id: "7",
               name: therapies.name,
               userId: 1,
               contact: doctors.id,
@@ -213,7 +212,6 @@ function AddEditTherapy() {
       if (doctors.id !== "") {
         try {
           const newTherapy: ITherapy = {
-            id: "4",
             name: therapies.name,
             userId: 2,
             contact: doctors.id,
@@ -305,7 +303,7 @@ function AddEditTherapy() {
             <TextField
               label="New therapy"
               name="name"
-              value={isEdit ? therapies.name : ""}
+              value={therapies.name}
               className="therapieField"
               sx={{ width: "100%" }}
               margin="normal"

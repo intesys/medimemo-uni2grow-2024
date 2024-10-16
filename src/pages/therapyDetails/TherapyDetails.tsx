@@ -106,9 +106,9 @@ function TherapyDetails() {
 
   const getDoctor = async (id: number) => {
     try {
-      const doctor = await fetch(`http://localhost:3000/contacts?id=${id}`);
-      const data = await doctor.json();
-      setDoctor(data[0]);
+      const result = await fetch(`http://localhost:3000/contacts/${id}`);
+      const data = await result.json();
+      setDoctor(data);
     } catch {
       setError("Something are wrong when doctor are found, try againt");
     }
@@ -241,7 +241,7 @@ function TherapyDetails() {
           <Box className="details-element-container">
             <img src={stethoscope} width="24px" height="24px" />
             <Typography className="details-element-content">
-              {doctor.qualification}. {doctor.name}
+            {doctor?.qualification}. {doctor?.name}
             </Typography>
             <ArrowForwardIosIcon width="24px" height="24px" />
           </Box>

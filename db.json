@@ -9,7 +9,7 @@
     "phone": "(555) 1234-5678",
     "email": "francesca.greco@example.com",
     "address": "123 Vision Lane, Suite 200, City Ville, ST 1234567",
-    "medicalID": "GRCFNCXXXXXXXXXX"
+    "medicalID": "GRCFNCXXXXXXXXYYY"
   },
   "users": [
     {
@@ -39,51 +39,23 @@
   ],
   "therapies": [
     {
-      "name": "Therapy 11",
+      "name": "Arythmie",
       "userId": 1,
-      "contact": "1",
-      "notes": "this is the notes of the new test validation therapy ",
-      "id": "1"
-    },
-    {
-      "name": "Therapy 2",
-      "userId": 1,
-      "contact": "2",
-      "notes": "this is the notes",
-      "id": "2"
-    },
-    {
-      "id": "3",
-      "name": "Mal de ventre",
-      "userId": 1,
-      "contact": "3",
-      "notes": "A prendre deux matin et deux soir"
-    },
-    {
-      "id": "5",
-      "name": "Mal de ventre",
-      "userId": 1,
-      "contact": "2",
-      "notes": "this is the notes"
-    },
-    {
-      "id": "6",
-      "name": "mal de dos",
-      "userId": 2,
-      "contact": "3",
-      "notes": ""
+      "contact": "a70e",
+      "notes": "Le coeur est important",
+      "id": "584d"
     }
   ],
   "contacts": [
     {
-      "id": "4f3b",
       "name": "bill jordan",
       "notes": "",
       "qualification": "Dr",
       "profession": "Neurologist",
       "phone": "432142432423",
-      "email": "",
-      "address": ""
+      "email": "jordan@gmail.com",
+      "address": "Egypt",
+      "id": "4f3b"
     },
     {
       "name": "Richi le rich",
@@ -92,7 +64,7 @@
       "profession": "pharmacian",
       "phone": "143894935",
       "email": "richi@gmail.com",
-      "address": "",
+      "address": "Nigeria",
       "id": "7982"
     },
     {
@@ -104,12 +76,72 @@
       "email": "Jeremy@gmail.com",
       "address": "France",
       "id": "a70e"
+    },
+    {
+      "id": "f804",
+      "name": "Lena Daina",
+      "notes": "",
+      "qualification": "Dr",
+      "profession": "pediatre",
+      "phone": "14235",
+      "email": "",
+      "address": ""
+    },
+    {
+      "name": "Fofou Arnaud",
+      "notes": "",
+      "qualification": "Dr",
+      "profession": "Neurologist",
+      "phone": "54367",
+      "email": "",
+      "address": "Dubai",
+      "id": "c2c9"
+    },
+    {
+      "id": "fabd",
+      "name": "Lerine Mosquito",
+      "notes": "n cs k,vkdsfv ",
+      "qualification": "Dr",
+      "profession": "ophthalmologist",
+      "phone": "9034812344903242",
+      "email": "",
+      "address": "USA"
+    },
+    {
+      "id": "e0d9",
+      "name": "Hema",
+      "notes": "tsdzhdhu ddizdb hdzjd uizujxb \n",
+      "qualification": "Dr",
+      "profession": "pediatre",
+      "phone": "45645",
+      "email": "hema@gmail.com",
+      "address": "Paris"
+    },
+    {
+      "id": "d5b0",
+      "name": "c;:sdkmjvm",
+      "notes": "",
+      "qualification": "Dr",
+      "profession": "é\"-(_\"",
+      "phone": "21425436",
+      "email": "",
+      "address": ""
+    },
+    {
+      "name": "Midas",
+      "notes": ",jcxlzdel:fcj ezcmedkedek szxekdede dlekd",
+      "qualification": "Dr",
+      "profession": "Dentist",
+      "phone": "9034812344903242",
+      "email": "",
+      "address": "cuba",
+      "id": "1462"
     }
   ],
   "prescriptions": [
     {
       "id": "1",
-      "therapy": 1,
+      "therapy": "584d",
       "medicine": 1,
       "dateFrom": "2024-09-19",
       "dateTo": "2024-10-30"

@@ -3,10 +3,6 @@
   overflow-y: auto;
 }
 
-
-
-
-
 .typography {
   color: var(--Primary-text, #444);
   text-align: center;
@@ -26,7 +22,6 @@
   justify-content: center;
   align-items: center;
   gap: 40px;
-
   border-radius: var(--Radius-sm, 8px);
   background: var(--Colours-White, #fff);
 }
@@ -37,10 +32,8 @@
   align-items: center;
   gap: 15px;
   align-self: stretch;
-  height: 100%;
+  margin-bottom: 50px;
 }
-
-
 
 .contactName {
   display: flex;

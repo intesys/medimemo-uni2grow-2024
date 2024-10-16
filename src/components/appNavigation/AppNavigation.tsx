@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./AppNavigation.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IconButton, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { ItemNavigation, dataItem } from "../../utils/navigationData";
 
 export function AppNavigation() {
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [activepage, setActivePage] = useState<string>(location.pathname);
 
@@ -33,12 +33,12 @@ export function AppNavigation() {
                   activepage.includes(item.path) ? "iconClickMiddle" : "iconClick"
                 }
               >
-                <IconButton>
-                  <img
-                    src={activepage.includes(item.path) ? item.activeIcon : item.icon}
-                    alt="Home Health"
-                  />
-                </IconButton>
+                <img
+                  src={
+                    activepage.includes(item.path) ? item.activeIcon : item.icon
+                  }
+                  alt="Home Health"
+                />
               </div>
               <Typography
                 className={

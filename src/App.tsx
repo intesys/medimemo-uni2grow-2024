@@ -4,13 +4,13 @@ import Login from "./pages/login/Login";
 import Therapies from "./pages/therapies/Therapies.tsx";
 import AddEditTherapy from "./pages/addEditTherapy/AddEditTherapy.tsx";
 import Medications from "./pages/medications/Medications.tsx"
-import MedicationDetails from "./pages/medicationDetails/MedicationDetails.tsx";
 import TherapyDetails from "./pages/therapyDetails/TherapyDetails.tsx";
 import Profile from "./pages/profile/Profile";
 import Contacts from "./pages/contacts/Contacts.tsx";
 import AddEditContact from "./pages/addEditContact/AddEditContact.tsx";
 import {DoctorDetails} from "./pages/doctorDetails/DoctorDetails.tsx";
 import Program from "./pages/program/Program.tsx";
+import DrugSpecifications from "./pages/medications/drugSpecifications/DrugSpecifications.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +22,11 @@ const router = createBrowserRouter([
       element: <Login />,
     
   },
+  {
+    path: "/drug/:id",
+    element: <DrugSpecifications />,
+  },
+
   {
     path: "/",
     loader: () => redirect("/login"),
@@ -46,8 +51,8 @@ const router = createBrowserRouter([
             element: <Medications />,
           },
           {
-            path: "details",
-            element: <MedicationDetails />,
+            path: ":id",
+            element: <DrugSpecifications />,
           },
         ],
       },

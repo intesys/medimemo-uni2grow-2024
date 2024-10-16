@@ -102,6 +102,9 @@ function Contacts() {
                     paddingTop: 1.5,
                     paddingBottom: 1.5
                   }}
+                  onClick={() => {
+                    navigate(`details`, { state: { id: contact.id } });
+                  }}
                 >
                   <IconButton
                     type="button"
@@ -131,9 +134,9 @@ function Contacts() {
                     type="button"
                     sx={{ p: "10px" }}
                     aria-label="arrowBack"
-                    onClick={() => {
-                      navigate(`details`, { state: { id: contact.id } });
-                    }}
+                    // onClick={() => {
+                    //   navigate(`details`, { state: { id: contact.id } });
+                    // }}
                   >
                     <img src={arrowFoward} alt="arrowBack icon" />
                   </IconButton>
@@ -143,8 +146,10 @@ function Contacts() {
           </div>
         </div>
 
-        <FabButton path="add" />
+       
       </div>
+
+      <FabButton path="add" />
     </>
   );
 }
