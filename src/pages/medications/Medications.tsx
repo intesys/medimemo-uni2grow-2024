@@ -21,6 +21,7 @@ function Medications() {
       const response = await fetch("http://localhost:3000/doses");
       const data = await response.json();
       setMedications(data);
+      if (medications.length == 0) navigate("/therapies");
     } catch {
       setError("Failed to load medications");
     }
