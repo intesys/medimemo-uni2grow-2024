@@ -365,6 +365,10 @@ function AddEditTherapy() {
     setErrorDelete("");
   };
 
+  const handleMedicine = (id:number) => {
+    navigate(`/medications/${id}`);
+  }
+
   return (
     <>
       <form className="therapy-page" onSubmit={handleSubmit}>
@@ -414,7 +418,7 @@ function AddEditTherapy() {
                         <Box className="medecine-title">{item.name}</Box>
                       </div>
                       <div className="medecine-title-button">
-                        <ArrowForwardIosIcon />
+                        <ArrowForwardIosIcon   onClick={()=>handleMedicine(item.id)} />
                       </div>
                     </div>
                     <div className="aline-button">

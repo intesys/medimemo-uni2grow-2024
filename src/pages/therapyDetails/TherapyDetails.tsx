@@ -156,7 +156,7 @@ function TherapyDetails() {
   };
 
   const handleMedicinesDetails = (id: number) => {
-    navigate("/medications/details", { state: { id: id } });
+    navigate(`/medications/${id}`);
   };
 
   const handleContact = () => {
