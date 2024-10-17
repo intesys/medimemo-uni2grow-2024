@@ -76,3 +76,7 @@ body {
   width: 100%;
   justify-content: center;
 }
+
+.button-element {
+  cursor: pointer;
+}

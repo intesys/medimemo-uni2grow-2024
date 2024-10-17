@@ -1,0 +1,1 @@
+export const LOGGED: string = "USER";
