@@ -16,7 +16,7 @@ import stethoscope from "../../assets/images/contact/stethoscope.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Close, Edit, ErrorOutline, ArrowBackIos } from "@mui/icons-material";
 import { ITherapy } from "../../models/Therapy";
-import { IMedicine } from "../../models/Medicine";
+import { IMedecine } from "../../models/Medecine";
 import { IPrescription } from "../../models/Prescription";
 import { IContact } from "../../models/Contact";
 
@@ -39,7 +39,7 @@ const style = {
 
 function TherapyDetails() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [medicines, setMedicines] = useState<IMedicine[]>([]);
+  const [medicines, setMedicines] = useState<IMedecine[]>([]);
   const [therapy, setTherapy] = useState<ITherapy>({
     id: 0,
     name: "",
@@ -65,7 +65,7 @@ function TherapyDetails() {
 
   const getTherapy = async (id: number) => {
     try {
-      const result = await fetch(`http://localhost:80/therapies?id=${id}`);
+      const result = await fetch(`http://localhost:3000/therapies?id=${id}`);
       const data = await result.json();
       setTherapy(data[0]);
       getDoctor(data[0].contact);
@@ -77,7 +77,7 @@ function TherapyDetails() {
   const getPrescriptionsWithTherapyId = async (id: number) => {
     try {
       const prescriptions = await fetch(
-        `http://localhost:80/prescriptions?therapy=${id}`
+        `http://localhost:3000/prescriptions?therapy=${id}`
       );
       const data = await prescriptions.json();
       getMedicines(data);
@@ -87,13 +87,13 @@ function TherapyDetails() {
   };
 
   const getMedicines = async (prescript: IPrescription[]) => {
-    let med: IMedicine[] = [];
+    let med: IMedecine[] = [];
     try {
-      const medicines = await fetch(`http://localhost:80/medicines`);
+      const medicines = await fetch(`http://localhost:3000/medicines`);
       const data = await medicines.json();
       prescript.forEach((item) => {
         const filtered = data.filter(
-          (med: IMedicine) => med.id == item.medicine
+          (med: IMedecine) => med.id == item.medicine
         );
         const [tempMed] = filtered;
         med = [...med, tempMed];

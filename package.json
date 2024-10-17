@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:vite\" \"npm run dev:json-server\"",
     "dev:vite": "vite",
-    "dev:json-server": "json-server --watch db.json --port 80",
+    "dev:json-server": "json-server --watch db.json --port 3000",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -15,17 +15,13 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.1",
-<<<<<<< HEAD
     "@mui/material": "^6.1.3",
+    "@mui/styled-engine-sc": "^6.1.1",
+    "@mui/styles": "^6.1.3",
     "@mui/x-date-pickers": "^7.20.0",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
-=======
-    "@mui/material": "^6.1.1",
-    "@mui/styled-engine-sc": "^6.1.1",
-    "@mui/styles": "^6.1.3",
     "formik": "^2.4.6",
->>>>>>> Groupe1-addTherapy
     "json-server": "^1.0.0-beta.3",
     "material-ui-popup-state": "^5.3.1",
     "react": "^18.3.1",

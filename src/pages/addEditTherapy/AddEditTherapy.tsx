@@ -31,6 +31,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { IPrescription } from "../../models/Prescription";
 
 function AddEditTherapy() {
+  const storage = localStorage.getItem('data')
   const [therapies, setTherapies] = useState<formValues>({
     name: "",
     notes: "",
@@ -58,6 +59,8 @@ function AddEditTherapy() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [errorDelete, setErrorDelete] = useState<string>("");
   const [fetchError, setFetchError] = useState<string>("");
+  const [isSave, setIsSave] = useState<boolean>(false);
+  const [idSaveTherapy, setIdSaveTherapy] = useState<string>("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -89,6 +92,15 @@ function AddEditTherapy() {
     }
   };
 
+  const  getThereapy = async (id:string) => {
+    try{
+      const result = await fetch(`http://localhost:3000/therapies/${id}`);
+      const data = await result.json();
+      setTherapies(data);
+    } catch {
+
+    }
+  }
   useEffect(() => {
     getMedication();
     getDoctor();
@@ -97,6 +109,17 @@ function AddEditTherapy() {
       setDoctors(doctor);
       setMedicineSelected(meds);
       setIsEdit(true);
+    }
+    if(storage){
+      const objStorage = JSON.parse(storage); 
+      getThereapy(objStorage.therapyId);
+      setDoctors(objStorage.doctorData);
+      setMedicineSelected(objStorage.medicinesData);
+      setIsSave(objStorage.isSave);
+      if(objStorage.therapyId){
+        setIdSaveTherapy(objStorage.therapyId);
+      }
+      localStorage.removeItem('data');
     }
   }, []);
 
@@ -112,6 +135,7 @@ function AddEditTherapy() {
       ...prevState,
       [name]: value,
     }));
+    setIsSave(false);
   };
 
   const handleSelect = (e: SelectChangeEvent<string>): void => {
@@ -123,11 +147,17 @@ function AddEditTherapy() {
         (item) => item.id == parseInt(e.target.value)
       );
       setMedicineSelected([...medicineSelected, selected]);
+      setIsSave(false);
     }
   };
 
   const handleBack = () => {
-    navigate(-1);
+    if(isEdit){
+      navigate(-1);
+    } else  {
+      navigate("/therapies");
+    }
+    
   };
 
   const handleDoctor = (e: SelectChangeEvent<string>): void => {
@@ -135,6 +165,7 @@ function AddEditTherapy() {
     if (doc) {
       setDoctors(doc);
       setErrorDoctor("");
+      setIsSave(false);
     }
   };
 
@@ -144,101 +175,151 @@ function AddEditTherapy() {
       ...prevState,
       [name]: value,
     }));
+    setIsSave(false);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const validationErrors = therapyForm(therapies);
+    if(!isSave){
+      if (Object.keys(validationErrors).length === 0) {
+        if (doctors.id !== "") {
+          try {
+            let result: Response | null = null;
+            if (isEdit) {
+              const updatedTherapy: ITherapy = {
+                name: therapies.name,
+                userId: therapies.userId,
+                contact: doctors.id,
+                notes: therapies.notes,
+              };
+              
+              result = await fetch(
+                `http://localhost:3000/therapies/${therapies.id}`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(updatedTherapy),
+                }
+              );
+            } else {
+              const newTherapy: ITherapy = {
+                name: therapies.name,
+                userId: 1,
+                contact: doctors.id,
+                notes: therapies.notes,
+              };
+              
+              if(idSaveTherapy){
+                result = await fetch(
+                  `http://localhost:3000/therapies/${idSaveTherapy}`,
+                  {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newTherapy),
+                  }
+                );
+              } else {
+                result = await fetch("http://localhost:3000/therapies", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+    
+                  body: JSON.stringify(newTherapy),
+                });
+              }
+              
+            }
+            if (!result.ok) {
+              setAddError("Add therapy failed");
+            } else {
+              handleBack();
+            }
+          } catch {
+            setAddError("Add therapy failed");
+          }
+        } else {
+          setErrorDoctor("This field is required");
+        }
+      } else {
+        setErrors(validationErrors);
+      }
+    } else {
+    navigate("/therapies");
+    }
+    
+  };
 
-    if (Object.keys(validationErrors).length === 0) {
-      if (doctors.id !== "") {
-        try {
-          let result: Response | null = null;
-          if (isEdit) {
-            const updatedTherapy: ITherapy = {
+  const handleAddPrescription = async (med:number): Promise<void> => {
+    const validationErrors = therapyForm(therapies);
+    
+    if(!isEdit){
+      if (Object.keys(validationErrors).length === 0) {
+        if (doctors.id !== "") {
+          try {
+            const newTherapy: ITherapy = {
               name: therapies.name,
-              userId: therapies.userId,
+              userId: therapies.userId? therapies.userId : 2,
               contact: doctors.id,
               notes: therapies.notes,
             };
-
-            result = await fetch(
-              `http://localhost:3000/therapies/${therapies.id}`,
-              {
-                method: "PUT",
+            if(!isSave){
+              const result = await fetch("http://localhost:3000/therapies", {
+                method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify(updatedTherapy),
+    
+                body: JSON.stringify(newTherapy),
+              });
+              if (!result.ok) {
+                setAddError("Add therapy failed");
+              } else {
+                const reponse = await result.json();
+                localStorage.setItem('data', JSON.stringify({
+                  therapyId: reponse.id,
+                  medicinesData: medicineSelected,
+                  doctorData: doctors,
+                  isSave: true ,
+                }));
+                setIdSaveTherapy(reponse.id);
+                navigate("program", {state: {idTherapy:reponse.id, idMedicine: med}});
               }
-            );
-          } else {
-            const newTherapy: ITherapy = {
-              name: therapies.name,
-              userId: 1,
-              contact: doctors.id,
-              notes: therapies.notes,
-            };
-
-            result = await fetch("http://localhost:3000/therapies", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-
-              body: JSON.stringify(newTherapy),
-            });
-          }
-
-          if (!result.ok) {
-            setAddError("Add therapy failed");
-          } else {
-            handleBack();
-          }
-        } catch {
-          setAddError("Add therapy failed");
-        }
-      } else {
-        setErrorDoctor("This field is required");
-      }
-    } else {
-      setErrors(validationErrors);
-    }
-  };
-
-  const handleAddPrescription = async (): Promise<void> => {
-    const validationErrors = therapyForm(therapies);
-    if (Object.keys(validationErrors).length === 0) {
-      if (doctors.id !== "") {
-        try {
-          const newTherapy: ITherapy = {
-            name: therapies.name,
-            userId: 2,
-            contact: doctors.id,
-            notes: therapies.notes,
-          };
-
-          const result = await fetch("http://localhost:3000/therapies", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify(newTherapy),
-          });
-          if (!result.ok) {
+            } else {
+              localStorage.setItem('data', JSON.stringify({
+                therapyId: idSaveTherapy,
+                medicinesData: medicineSelected,
+                doctorData: doctors,
+                isSave: true,
+              }));
+              navigate("program", {state: {idTherapy:idSaveTherapy, idMedicine: med}});
+            }
+            
+            
+          } catch {
             setAddError("Add therapy failed");
           }
-          navigate("program");
-        } catch {
-          setAddError("Add therapy failed");
+        } else {
+          setErrorDoctor("This field is required");
         }
       } else {
-        setErrorDoctor("This field is required");
+        setErrors(validationErrors);
       }
     } else {
-      setErrors(validationErrors);
+      localStorage.setItem('data', JSON.stringify({
+        therapyId: idSaveTherapy,
+        medicinesData: medicineSelected,
+        doctorData: doctors,
+        isSave: true,
+      }));
+      navigate("program", {state: {idTherapy:therapies.id, idMedicine: med}});
     }
+      
   };
 
   const handleRemove = async (element: IMedecine): Promise<void> => {
@@ -342,7 +423,7 @@ function AddEditTherapy() {
                         className="medecine-name-button"
                       >
                         <Button
-                          sx={{ color: "white" }}
+                          sx={{ color: "white", width:"100%"}}
                           className="medecine-button"
                         >
                           REMOVE
@@ -350,9 +431,9 @@ function AddEditTherapy() {
                       </div>
                       <div className="medecine-name-button">
                         <Button
-                          sx={{ color: "white" }}
+                          sx={{ color: "white", width:"100%" }}
                           className="medecine-button"
-                          onClick={handleAddPrescription}
+                          onClick={() =>handleAddPrescription(item.id)}
                         >
                           ADD PROGRAM
                         </Button>
