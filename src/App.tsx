@@ -1,26 +1,29 @@
-import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import { Layout } from "./components/layout/Layout.tsx";
 import Login from "./pages/login/Login";
 import Therapies from "./pages/therapies/Therapies.tsx";
 import AddEditTherapy from "./pages/addEditTherapy/AddEditTherapy.tsx";
-import Medications from "./pages/medications/Medications.tsx"
+import Medications from "./pages/medications/Medications.tsx";
 import TherapyDetails from "./pages/therapyDetails/TherapyDetails.tsx";
 import Profile from "./pages/profile/Profile";
 import Contacts from "./pages/contacts/Contacts.tsx";
 import AddEditContact from "./pages/addEditContact/AddEditContact.tsx";
-import {DoctorDetails} from "./pages/doctorDetails/DoctorDetails.tsx";
+import { DoctorDetails } from "./pages/doctorDetails/DoctorDetails.tsx";
 import Program from "./pages/program/Program.tsx";
 import DrugSpecifications from "./pages/medications/drugSpecifications/DrugSpecifications.tsx";
 
 const router = createBrowserRouter([
   {
-      path: "",
-      loader: ()=> redirect("/login"),
+    path: "",
+    loader: () => redirect("/login"),
   },
   {
-      path: "/login",
-      element: <Login />,
-    
+    path: "/login",
+    element: <Login />,
   },
   {
     path: "/drug/:id",
@@ -41,7 +44,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/medications",
-        element: <Medications />
+        element: <Medications />,
       },
       {
         path: "medications",
@@ -72,8 +75,8 @@ const router = createBrowserRouter([
               },
               {
                 path: "program",
-                element: <Program />
-              }
+                element: <Program />,
+              },
             ],
           },
           {
@@ -85,8 +88,8 @@ const router = createBrowserRouter([
               },
               {
                 path: "program",
-                element: <Program />
-              }
+                element: <Program />,
+              },
             ],
           },
           {

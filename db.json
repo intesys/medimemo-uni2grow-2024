@@ -200,6 +200,23 @@
     }
   ],
   "doses": [
-
+    {
+      "id": "1",
+      "therapyName": "Therapy 1",
+      "time": "12h30PM",
+      "date": "2024-09-20",
+      "taken": true,
+      "therapy": 1,
+      "prescriptionTime": 1
+    },
+    {
+      "id": "2",
+      "therapyName": "Therapy 2",
+      "time": "12h30PM",
+      "date": "2024-09-20",
+      "taken": false,
+      "therapy": 1,
+      "prescriptionTime": 1
+    }
   ]
 }

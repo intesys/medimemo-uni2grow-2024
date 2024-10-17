@@ -4,7 +4,7 @@ import {
   Card,
   Link,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -18,11 +18,12 @@ import {
   formError,
   formValues,
   validateForm,
-  validationField
+  validationField,
 } from "../../utils/Validation";
 
 import { SnackBarComponent } from "../../components/snackBarComponent/SnackBarComponent";
 import "./Login.css";
+import { LOGGED } from "../../utils/Constants";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,12 +31,12 @@ function Login() {
 
   const [credentials, setCredentials] = useState<formValues>({
     username: "",
-    password: ""
+    password: "",
   });
 
   const [errors, setErrors] = useState<formError>({
     username: "",
-    password: ""
+    password: "",
   });
   interface Users {
     username: "";
@@ -52,12 +53,12 @@ function Login() {
 
     setErrors((prevState) => ({
       ...prevState,
-      [fieldName]: error || ""
+      [fieldName]: error || "",
     }));
 
     setCredentials((prevState) => ({
       ...prevState,
-      [fieldName]: value
+      [fieldName]: value,
     }));
   };
 
@@ -69,12 +70,13 @@ function Login() {
         const result = await fetch("http://localhost:3000/users");
         const datas = await result.json();
 
-        const isValidUser = datas.some(
+        const isValidUser = datas.find(
           (item: Users) =>
             item.username === credentials.username &&
             item.password === credentials.password
         );
         if (isValidUser) {
+          localStorage.setItem(LOGGED, isValidUser.username);
           setCredentials({ username: "", password: "" });
           navigate("/medications");
         } else {
@@ -84,8 +86,8 @@ function Login() {
       } else {
         setErrors(validationErrors);
       }
-    } catch (error) {
-      setLoginError(true)
+    } catch {
+      setLoginError(true);
     }
   };
 
@@ -95,8 +97,7 @@ function Login() {
 
   return (
     <>
-
-{loginError && (
+      {loginError && (
         <SnackBarComponent
           open={loginError}
           close={handleSnackbarClose}
@@ -164,7 +165,7 @@ function Login() {
                   backgroundColor: "red",
                   color: "white",
                   fontWeight: "bold",
-                  flex: 1
+                  flex: 1,
                 }}
                 type="submit"
               >
@@ -194,7 +195,7 @@ function Login() {
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
               >
                 <img width={30} height={30} alt="apple" src={a} />
@@ -207,7 +208,7 @@ function Login() {
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
               >
                 <img width={30} height={30} alt="google" src={g} />
@@ -219,7 +220,7 @@ function Login() {
                   justifyContent: "center",
                   alignItems: "center",
                   display: "flex",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
               >
                 <img width={30} height={30} alt="facebook" src={f} />
@@ -243,7 +244,7 @@ function Login() {
             {snackbarMessage}
           </Alert>
         </Snackbar>
-        </div>
+      </div>
     </>
   );
 }

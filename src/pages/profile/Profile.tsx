@@ -37,6 +37,7 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IUser } from "../../models/User";
+import { LOGGED } from "../../utils/Constants";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -105,6 +106,7 @@ const Profile = () => {
   };
 
   const logout = () => {
+    localStorage.removeItem(LOGGED);
     navigate("/login");
   };
 

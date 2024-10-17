@@ -14,23 +14,27 @@ export function AppNavigation() {
     setActivePage(location.pathname);
   }, [location.pathname]);
 
-  const handleNavigate = (path: string ) => {
+  const handleNavigate = (path: string) => {
     setActivePage(path);
     navigate(path);
-  }
+  };
 
   return (
     <div className="menuBot">
       <div className="sub-menuBot">
         {dataItem.map((item: ItemNavigation) => (
-          <div color="inherit" onClick={() => handleNavigate(item.path)} key={item.path} >
-            <div
-              key={item.path}
-              className="menuBottomItem"
-            >
+          <div
+            className="button-element"
+            color="inherit"
+            onClick={() => handleNavigate(item.path)}
+            key={item.path}
+          >
+            <div key={item.path} className="menuBottomItem">
               <div
                 className={
-                  activepage.includes(item.path) ? "iconClickMiddle" : "iconClick"
+                  activepage.includes(item.path)
+                    ? "iconClickMiddle"
+                    : "iconClick"
                 }
               >
                 <img
