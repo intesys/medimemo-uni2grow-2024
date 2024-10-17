@@ -10,31 +10,18 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { useNavigate, useLocation } from "react-router-dom";
-
-
-interface IPrescriptions {
-  id?: string;
-  therapy: string;
-  medicine: number;
-  startDate: Dayjs | null;
-  endDate: Dayjs | null;
-}
-
-interface IPrescriptionTime {
-  id: string;
-  time: Dayjs | null;
-  prescription?: string;
-}
+import {IPrescriptionTime} from "../../models/PrescriptionTime"
+import { IPrescription } from "../../models/Prescription";
 
 function Program() {
   const navigate = useNavigate();
   const location = useLocation();
   const [medicineName, setMedicineName]= useState<string>("");
-  const [prescription, setPrescription] = useState<IPrescriptions>({
+  const [prescription, setPrescription] = useState<IPrescription>({
     therapy: "",
     medicine: 1,
-    startDate: null,
-    endDate: null,
+    dateFrom: null,
+    dateTo: null,
   });
 
   const [prescriptionTimes, setPrescriptionTimes] = useState<
@@ -71,9 +58,9 @@ function Program() {
   const handleStartDateChange = (newDate: Dayjs | null) => {
     setPrescription((prev) => ({
       ...prev,
-      startDate: newDate,
+      dateFrom: newDate,
     }));
-    if (newDate && prescription.endDate && newDate > prescription.endDate) {
+    if (newDate && prescription.dateTo && newDate > prescription.dateTo) {
       setStartDateError("Start date cannot be after end date");
     } else {
       setEndDateError(null);
@@ -84,9 +71,9 @@ function Program() {
   const handleEndDateChange = (newDate: Dayjs | null) => {
     setPrescription((prev) => ({
       ...prev,
-      endDate: newDate,
+      dateTo: newDate,
     }));
-    if (prescription.startDate && newDate && newDate < prescription.startDate) {
+    if (prescription.dateFrom && newDate && newDate < prescription.dateFrom) {
       setEndDateError("End date cannot be before start date");
     } else {
       setStartDateError(null);
@@ -128,8 +115,8 @@ function Program() {
 
   const areAllFieldsFilled = () => {
     return (
-      prescription.startDate &&
-      prescription.endDate &&
+      prescription.dateFrom &&
+      prescription.dateTo &&
       prescriptionTimes.every((timeObj) => timeObj.time !== null) &&
       !Object.values(timeErrors).some((error) => error !== "")
     );
@@ -141,8 +128,8 @@ function Program() {
       const newPrescription = {
         therapy: prescription.therapy,
         medicine: prescription.medicine,
-        dateForm: dayjs(prescription.startDate).format("MM-DD-YYYY"),
-        dateTo: dayjs(prescription.endDate).format("MM-DD-YYYY"),
+        dateForm: dayjs(prescription.dateFrom).format("MM-DD-YYYY"),
+        dateTo: dayjs(prescription.dateTo).format("MM-DD-YYYY"),
       };
 
       const addPrescriptionResult = await fetch(
@@ -225,7 +212,7 @@ function Program() {
                         <MobileDatePicker
                           sx={{ width: "100%" }}
                           label="Date"
-                          value={prescription?.startDate}
+                          value={prescription?.dateFrom}
                           onChange={handleStartDateChange}
                           slotProps={{
                             textField: {
@@ -240,7 +227,7 @@ function Program() {
                         <MobileDatePicker
                           sx={{ width: "100%" }}
                           label="End Date"
-                          value={prescription.endDate}
+                          value={prescription.dateTo}
                           onChange={handleEndDateChange}
                           slotProps={{
                             textField: {

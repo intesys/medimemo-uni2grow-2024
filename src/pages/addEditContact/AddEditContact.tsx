@@ -3,12 +3,7 @@ import { SnackBarComponent } from "../../components/snackBarComponent/SnackBarCo
 
 import { useState, useEffect } from "react";
 
-import {
-  TextField,
-  Typography,
-  InputAdornment,
-  Button,
-} from "@mui/material";
+import { TextField, Typography, InputAdornment, Button } from "@mui/material";
 
 import { useFormik } from "formik";
 
@@ -92,7 +87,12 @@ function AddEditContact() {
         if (response.ok) {
           formik.resetForm();
           const savedContact = await response.json();
-          navigate("/contacts", { state: { newContact: savedContact } });
+          if (isEditing){
+            navigate("/contacts/details", { state: { id: savedContact.id } });
+          }else {
+            navigate("/contacts", { state: { newContact: savedContact } });
+          }
+          
         }
       } catch (error) {
         setSubmitError(true);

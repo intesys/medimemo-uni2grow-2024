@@ -14,6 +14,7 @@ import {
   Snackbar,
   Alert,
   SnackbarCloseReason,
+  SxProps,
 } from "@mui/material";
 import UserAvatar from "../../assets/images/avatar.svg";
 import UniversalCur from "../../assets/images/profile/universal_currency.svg";
@@ -24,7 +25,7 @@ import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import Header from "../../components/header/Header";
 import { useNavigate } from "react-router-dom";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowBackIos,
   Cancel,
@@ -33,22 +34,15 @@ import {
   Logout,
   ReportOutlined,
 } from "@mui/icons-material";
-
-interface User {
-  name: string;
-  lastName: string;
-  medicalID: string;
-  allergies: string;
-  phone: string;
-  email: string;
-  address: string;
-}
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { IUser } from "../../models/User";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [editable, setEditable] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<IUser>({
     name: "",
     lastName: "",
     medicalID: "",
@@ -60,38 +54,21 @@ const Profile = () => {
   const [error, setError] = useState("");
   const [openSnack, setOpenSnack] = useState(false);
 
-  const getUserProfile = async () => {
-    try {
-      setError("");
-      const response = await fetch("http://localhost:3000/me");
-      const data: User = await response.json();
-      setUser(data);
-      setUser(data);
-    } catch {
-      setError("Error fetching user profile");
-    }
-  };
-
-  useEffect(() => {
-    getUserProfile();
-  }, []);
-
   const handleEdit = () => {
     setEditable(!editable);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleLogout = () => {
     if (!editable) handleOpenAlert();
-    else handleSave();
     setEditable(false);
   };
 
-  const handleSave = async () => {
+  const handleSave = async (value: IUser) => {
+    setEditable(false);
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
+      body: JSON.stringify(value),
     };
 
     try {
@@ -127,17 +104,64 @@ const Profile = () => {
     setOpenAlert(false);
   };
 
-  const handleLogout = () => {
+  const logout = () => {
     navigate("/login");
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUser((prevState) => ({ ...prevState, [name]: value }));
+  const handleClean = (name: string) => {
+    formik.setValues((prevValues) => ({ ...prevValues, [name]: "" }));
   };
 
-  const handleClean = (name: string) => {
-    setUser((prevForm) => ({ ...prevForm, [name]: "" }));
+  const validationSchema = Yup.object({
+    medicalID: Yup.string().required("MedicalID is required"),
+    allergies: Yup.string().required("Allergies is required"),
+    phone: Yup.string().required("Phone number is required"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Invalid email format"),
+    address: Yup.string().required("Address is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: user.name,
+      lastName: user.lastName,
+      medicalID: user.medicalID,
+      allergies: user.allergies,
+      phone: user.phone,
+      email: user.email,
+      address: user.address,
+    },
+    validationSchema,
+    onSubmit: (value) => handleSave(value),
+    validateOnBlur: true,
+  });
+
+  const getUserProfile = async () => {
+    try {
+      setError("");
+      const response = await fetch("http://localhost:3000/me");
+      const data: IUser = await response.json();
+      setUser(data);
+      formik.setValues(data);
+    } catch {
+      setError("Error fetching user profile");
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
+
+  const inputStyle: SxProps = {
+    width: "100%",
+    "& .MuiInputBase-input.Mui-disabled": {
+      WebkitTextFillColor: "#222",
+    },
+    "& .css-1mnoz6i-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
+      {
+        borderColor: "#555",
+      },
   };
 
   return (
@@ -204,7 +228,7 @@ const Profile = () => {
               color: "#F00",
               fontWeight: "bold",
             }}
-            onClick={handleLogout}
+            onClick={logout}
             autoFocus
           >
             <Logout />
@@ -212,7 +236,7 @@ const Profile = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <form className="profile-container" onSubmit={handleSubmit}>
+      <form className="profile-container" onSubmit={formik.handleSubmit}>
         <div className="secondary">
           <div className="avatar-container">
             <Avatar
@@ -243,7 +267,7 @@ const Profile = () => {
           </div>
           <div className="credentials">
             <Typography variant="h6" color="initial">
-              {`${user.lastName} ${user.name}`}
+              {`${formik.values.lastName} ${formik.values.name}`}
             </Typography>
             <div className="informations">
               <Typography
@@ -260,11 +284,16 @@ const Profile = () => {
               </Typography>
               <TextField
                 name="medicalID"
-                value={user.medicalID}
-                onChange={handleChange}
                 disabled={!editable}
+                value={formik.values.medicalID}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.medicalID && Boolean(formik.errors.medicalID)
+                }
+                helperText={formik.touched.medicalID && formik.errors.medicalID}
                 label={editable ? "Medical ID" : null}
-                sx={{ width: "100%", borderColor: "red" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
@@ -280,7 +309,7 @@ const Profile = () => {
                       <>
                         {editable && (
                           <>
-                            {user.medicalID != "" && (
+                            {formik.values.medicalID != "" && (
                               <IconButton
                                 sx={{ color: "#F00", p: "0px" }}
                                 onClick={() => handleClean("medicalID")}
@@ -298,10 +327,15 @@ const Profile = () => {
               <TextField
                 name="allergies"
                 disabled={!editable}
+                value={formik.values.allergies}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.allergies && Boolean(formik.errors.allergies)
+                }
+                helperText={formik.touched.allergies && formik.errors.allergies}
                 label={editable ? "Allergies" : null}
-                value={user.allergies}
-                onChange={handleChange}
-                sx={{ width: "100%" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
@@ -317,7 +351,7 @@ const Profile = () => {
                       <>
                         {editable && (
                           <>
-                            {user.allergies != "" && (
+                            {formik.values.allergies != "" && (
                               <IconButton
                                 sx={{ color: "#F00", p: "0px" }}
                                 onClick={() => handleClean("allergies")}
@@ -334,23 +368,28 @@ const Profile = () => {
               />
               <TextField
                 name="phone"
-                value={user.phone}
-                onChange={handleChange}
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.phone && Boolean(formik.errors.phone)}
+                helperText={formik.touched.phone && formik.errors.phone}
                 disabled={!editable}
                 label={editable ? "Phone Number" : null}
-                sx={{ width: "100%" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <PhoneOutlinedIcon />
+                        <PhoneOutlinedIcon
+                          sx={{ color: "#222", opacity: "0.9" }}
+                        />
                       </InputAdornment>
                     ),
                     endAdornment: (
                       <>
                         {editable && (
                           <>
-                            {user.phone != "" && (
+                            {formik.values.phone != "" && (
                               <IconButton
                                 sx={{ color: "#F00", p: "0px" }}
                                 onClick={() => handleClean("phone")}
@@ -367,24 +406,29 @@ const Profile = () => {
               />
               <TextField
                 name="email"
-                value={user.email}
-                onChange={handleChange}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
                 disabled={!editable}
                 label={editable ? "Email" : null}
                 id="outlined-start-adornment"
-                sx={{ width: "100%" }}
+                sx={inputStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <MailOutlinedIcon />
+                        <MailOutlinedIcon
+                          sx={{ color: "#222", opacity: "0.9" }}
+                        />
                       </InputAdornment>
                     ),
                     endAdornment: (
                       <>
                         {editable && (
                           <>
-                            {user.email != "" && (
+                            {formik.values.email != "" && (
                               <IconButton
                                 sx={{ color: "#F00", p: "0px" }}
                                 onClick={() => handleClean("email")}
@@ -402,15 +446,30 @@ const Profile = () => {
               <TextField
                 multiline
                 name="address"
-                value={user.address}
-                onChange={handleChange}
+                value={formik.values.address}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.address && Boolean(formik.errors.address)}
+                helperText={formik.touched.address && formik.errors.address}
                 disabled={!editable}
                 label={editable ? "Address" : null}
-                sx={{ width: "100%" }}
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-input.Mui-disabled": {
+                    WebkitTextFillColor: "#222",
+                  },
+                  "& .css-ukn3g9-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#555",
+                    },
+                }}
                 slotProps={{
                   input: {
                     startAdornment: (
-                      <InputAdornment position="start">
+                      <InputAdornment
+                        position="start"
+                        sx={{ alignSelf: "start" }}
+                      >
                         <img
                           className="input-image"
                           src={Home}
@@ -422,7 +481,7 @@ const Profile = () => {
                       <>
                         {editable && (
                           <>
-                            {user.address != "" && (
+                            {formik.values.address != "" && (
                               <IconButton
                                 sx={{ color: "#F00", p: "0px" }}
                                 onClick={() => handleClean("address")}
@@ -454,30 +513,45 @@ const Profile = () => {
             User Profile edited successfully.!
           </Alert>
         </Snackbar>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{
-            width: "100%",
-            backgroundColor: "red",
-            color: "white",
-            fontWeight: "bold",
-            padding: "10px 20px",
-            borderRadius: "5px",
-            gap: "10px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {!editable ? (
-            "Logout"
-          ) : (
-            <>
-              <SaveOutlinedIcon /> {"Save"}
-            </>
-          )}
-        </Button>
+        {!editable ? (
+          <Button
+            onClick={handleLogout}
+            variant="contained"
+            sx={{
+              width: "100%",
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              borderRadius: "5px",
+              gap: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Logout
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              width: "100%",
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              borderRadius: "5px",
+              gap: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <SaveOutlinedIcon /> {"Save"}
+          </Button>
+        )}
       </form>
     </div>
   );
