@@ -26,8 +26,10 @@ export function Layout() {
           </div>
           <AppNavigation />
         </>
-      ) : (
+      ) : isLogged ? (
         <Outlet />
+      ) : (
+        <Navigate to="/login" />
       )}
     </div>
   );
