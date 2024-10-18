@@ -25,18 +25,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  {
-    path: "/drug/:id",
-    element: <DrugSpecifications />,
-  },
 
   {
     path: "/",
     loader: () => redirect("/login"),
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
   },
 
   {
@@ -118,6 +110,10 @@ const router = createBrowserRouter([
             element: <DoctorDetails />,
           },
         ],
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
