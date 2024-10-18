@@ -25,7 +25,6 @@ function Program() {
     dateFrom: null,
     dateTo: null,
   });
-
   
   const [prescriptionTimes, setPrescriptionTimes] = useState<
     IPrescriptionTime[]
@@ -48,9 +47,9 @@ function Program() {
         therapy: location.state?.idTherapy,
         medicine: location.state?.idMedicine,
       }));
-    }
-    
-    getMedicineName(location.state?.idMedicine)
+    } 
+
+    getMedicineName(location.state?.idMedicine);
   }, []);
 
   const getPrescription = async (id:string)=>{
@@ -232,6 +231,8 @@ function Program() {
                           label="Date"
                           value={prescription?.dateFrom}
                           onChange={handleStartDateChange}
+                          defaultValue={dayjs()}
+                          minDate={dayjs()}
                           slotProps={{
                             textField: {
                               error: !!startDateError,
@@ -247,6 +248,8 @@ function Program() {
                           label="End Date"
                           value={prescription.dateTo}
                           onChange={handleEndDateChange}
+                          defaultValue={dayjs()}
+                          minDate={dayjs()}
                           slotProps={{
                             textField: {
                               error: !!endDateError,
@@ -276,6 +279,7 @@ function Program() {
                         sx={{ width: "100%" }}
                         label=""
                         value={timeObj.time}
+                        
                         onChange={(newTime) =>
                           handleTimeChange(timeObj.id, newTime)
                         }

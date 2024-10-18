@@ -33,6 +33,7 @@ import { IPrescription } from "../../models/Prescription";
 function AddEditTherapy() {
   const storage = localStorage.getItem("data");
   const [therapies, setTherapies] = useState<formValues>({
+    id:"0",
     name: "",
     notes: "",
   });
@@ -108,7 +109,7 @@ function AddEditTherapy() {
       setMedicineSelected(meds);
       setIsEdit(true);
     }
-    if (storage) {
+    if(storage) {
       const objStorage = JSON.parse(storage);
       getThereapy(objStorage.therapyId);
       setDoctors(objStorage.doctorData);
@@ -266,8 +267,8 @@ function AddEditTherapy() {
             const precript = await fetch("http://localhost:3000/prescriptions");
             const res = await precript.json();
             const isPrescript = res.filter(
-              (item: IPrescription) =>
-                item.medicine === med && item.therapy === therapies.id
+              (item: IPrescription) => 
+                (item.medicine === med && item.therapy === therapies.id)
             );
             if (isPrescript.length === 0) {
               if (!isSave) {
