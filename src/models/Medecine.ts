@@ -1,5 +1,5 @@
 export interface IMedecine {
-  id?: number;
+  id: number;
   name: string;
   leaflet?: string;
 }

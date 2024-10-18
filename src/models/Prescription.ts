@@ -1,7 +1,8 @@
+import { Dayjs } from "dayjs";
 export interface IPrescription {
-  id: number;
-  therapy: number;
+  id?: string;
+  therapy: string;
   medicine: number;
-  dateFrom: string;
-  dateTo: string;
+  dateFrom: Dayjs | null;
+  dateTo: Dayjs | null;
 }
