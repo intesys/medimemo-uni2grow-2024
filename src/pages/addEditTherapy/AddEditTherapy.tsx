@@ -31,7 +31,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { IPrescription } from "../../models/Prescription";
 
 function AddEditTherapy() {
-  const storage = localStorage.getItem('data')
+  const storage = localStorage.getItem("data");
   const [therapies, setTherapies] = useState<formValues>({
     name: "",
     notes: "",
@@ -92,15 +92,13 @@ function AddEditTherapy() {
     }
   };
 
-  const  getThereapy = async (id:string) => {
-    try{
+  const getThereapy = async (id: string) => {
+    try {
       const result = await fetch(`http://localhost:3000/therapies/${id}`);
       const data = await result.json();
       setTherapies(data);
-    } catch {
-
-    }
-  }
+    } catch {}
+  };
   useEffect(() => {
     getMedication();
     getDoctor();
@@ -110,16 +108,16 @@ function AddEditTherapy() {
       setMedicineSelected(meds);
       setIsEdit(true);
     }
-    if(storage){
-      const objStorage = JSON.parse(storage); 
+    if (storage) {
+      const objStorage = JSON.parse(storage);
       getThereapy(objStorage.therapyId);
       setDoctors(objStorage.doctorData);
       setMedicineSelected(objStorage.medicinesData);
       setIsSave(objStorage.isSave);
-      if(objStorage.therapyId){
+      if (objStorage.therapyId) {
         setIdSaveTherapy(objStorage.therapyId);
       }
-      localStorage.removeItem('data');
+      localStorage.removeItem("data");
     }
   }, []);
 
@@ -147,17 +145,15 @@ function AddEditTherapy() {
         (item) => item.id == parseInt(e.target.value)
       );
       setMedicineSelected([...medicineSelected, selected]);
-      setIsSave(false);
     }
   };
 
   const handleBack = () => {
-    if(isEdit){
+    if (isEdit) {
       navigate(-1);
-    } else  {
+    } else {
       navigate("/therapies");
     }
-    
   };
 
   const handleDoctor = (e: SelectChangeEvent<string>): void => {
@@ -181,7 +177,7 @@ function AddEditTherapy() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const validationErrors = therapyForm(therapies);
-    if(!isSave){
+    if (!isSave) {
       if (Object.keys(validationErrors).length === 0) {
         if (doctors.id !== "") {
           try {
@@ -193,7 +189,7 @@ function AddEditTherapy() {
                 contact: doctors.id,
                 notes: therapies.notes,
               };
-              
+
               result = await fetch(
                 `http://localhost:3000/therapies/${therapies.id}`,
                 {
@@ -211,8 +207,8 @@ function AddEditTherapy() {
                 contact: doctors.id,
                 notes: therapies.notes,
               };
-              
-              if(idSaveTherapy){
+
+              if (idSaveTherapy) {
                 result = await fetch(
                   `http://localhost:3000/therapies/${idSaveTherapy}`,
                   {
@@ -229,11 +225,10 @@ function AddEditTherapy() {
                   headers: {
                     "Content-Type": "application/json",
                   },
-    
+
                   body: JSON.stringify(newTherapy),
                 });
               }
-              
             }
             if (!result.ok) {
               setAddError("Add therapy failed");
@@ -250,57 +245,84 @@ function AddEditTherapy() {
         setErrors(validationErrors);
       }
     } else {
-    navigate("/therapies");
+      navigate("/therapies");
     }
-    
   };
 
-  const handleAddPrescription = async (med:number): Promise<void> => {
+  const handleAddPrescription = async (med: number): Promise<void> => {
     const validationErrors = therapyForm(therapies);
-    
-    if(!isEdit){
+
+    if (!isEdit) {
       if (Object.keys(validationErrors).length === 0) {
         if (doctors.id !== "") {
           try {
             const newTherapy: ITherapy = {
               name: therapies.name,
-              userId: therapies.userId? therapies.userId : 2,
+              userId: therapies.userId ? therapies.userId : 2,
               contact: doctors.id,
               notes: therapies.notes,
             };
-            if(!isSave){
-              const result = await fetch("http://localhost:3000/therapies", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-    
-                body: JSON.stringify(newTherapy),
-              });
-              if (!result.ok) {
-                setAddError("Add therapy failed");
+
+            const precript = await fetch("http://localhost:3000/prescriptions");
+            const res = await precript.json();
+            const isPrescript = res.filter(
+              (item: IPrescription) =>
+                item.medicine === med && item.therapy === therapies.id
+            );
+            if (isPrescript.length === 0) {
+              if (!isSave) {
+                const result = await fetch("http://localhost:3000/therapies", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+
+                  body: JSON.stringify(newTherapy),
+                });
+                if (!result.ok) {
+                  setAddError("Add therapy failed");
+                } else {
+                  const reponse = await result.json();
+                  localStorage.setItem(
+                    "data",
+                    JSON.stringify({
+                      therapyId: reponse.id,
+                      medicinesData: medicineSelected,
+                      doctorData: doctors,
+                      isSave: true,
+                    })
+                  );
+                  setIdSaveTherapy(reponse.id);
+                  navigate("program", {
+                    state: { idTherapy: reponse.id, idMedicine: med },
+                  });
+                }
               } else {
-                const reponse = await result.json();
-                localStorage.setItem('data', JSON.stringify({
-                  therapyId: reponse.id,
-                  medicinesData: medicineSelected,
-                  doctorData: doctors,
-                  isSave: true ,
-                }));
-                setIdSaveTherapy(reponse.id);
-                navigate("program", {state: {idTherapy:reponse.id, idMedicine: med}});
+                localStorage.setItem(
+                  "data",
+                  JSON.stringify({
+                    therapyId: idSaveTherapy,
+                    medicinesData: medicineSelected,
+                    doctorData: doctors,
+                    isSave: true,
+                  })
+                );
+                navigate("program", {
+                  state: { idTherapy: idSaveTherapy, idMedicine: med },
+                });
               }
             } else {
-              localStorage.setItem('data', JSON.stringify({
-                therapyId: idSaveTherapy,
-                medicinesData: medicineSelected,
-                doctorData: doctors,
-                isSave: true,
-              }));
-              navigate("program", {state: {idTherapy:idSaveTherapy, idMedicine: med}});
+              localStorage.setItem(
+                "data",
+                JSON.stringify({
+                  therapyId: idSaveTherapy,
+                  medicinesData: medicineSelected,
+                  doctorData: doctors,
+                  isSave: true,
+                })
+              );
+              navigate("program", {state: {idPrecription: isPrescript[0].id,  idMedicine: med}})
             }
-            
-            
           } catch {
             setAddError("Add therapy failed");
           }
@@ -311,15 +333,19 @@ function AddEditTherapy() {
         setErrors(validationErrors);
       }
     } else {
-      localStorage.setItem('data', JSON.stringify({
-        therapyId: idSaveTherapy,
-        medicinesData: medicineSelected,
-        doctorData: doctors,
-        isSave: true,
-      }));
-      navigate("program", {state: {idTherapy:therapies.id, idMedicine: med}});
+      localStorage.setItem(
+        "data",
+        JSON.stringify({
+          therapyId: therapies.id,
+          medicinesData: medicineSelected,
+          doctorData: doctors,
+          isSave: true,
+        })
+      );
+      navigate("program", {
+        state: { idTherapy: therapies.id, idMedicine: med },
+      });
     }
-      
   };
 
   const handleRemove = async (element: IMedecine): Promise<void> => {
@@ -365,9 +391,9 @@ function AddEditTherapy() {
     setErrorDelete("");
   };
 
-  const handleMedicine = (id:number) => {
+  const handleMedicine = (id: number) => {
     navigate(`/medications/${id}`);
-  }
+  };
 
   return (
     <>
@@ -418,7 +444,9 @@ function AddEditTherapy() {
                         <Box className="medecine-title">{item.name}</Box>
                       </div>
                       <div className="medecine-title-button">
-                        <ArrowForwardIosIcon   onClick={()=>handleMedicine(item.id)} />
+                        <ArrowForwardIosIcon
+                          onClick={() => handleMedicine(item.id)}
+                        />
                       </div>
                     </div>
                     <div className="aline-button">
@@ -427,7 +455,7 @@ function AddEditTherapy() {
                         className="medecine-name-button"
                       >
                         <Button
-                          sx={{ color: "white", width:"100%"}}
+                          sx={{ color: "white", width: "100%" }}
                           className="medecine-button"
                         >
                           REMOVE
@@ -435,9 +463,9 @@ function AddEditTherapy() {
                       </div>
                       <div className="medecine-name-button">
                         <Button
-                          sx={{ color: "white", width:"100%" }}
+                          sx={{ color: "white", width: "100%" }}
                           className="medecine-button"
-                          onClick={() =>handleAddPrescription(item.id)}
+                          onClick={() => handleAddPrescription(item.id)}
                         >
                           ADD PROGRAM
                         </Button>

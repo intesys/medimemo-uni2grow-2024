@@ -16,6 +16,8 @@ import { IPrescription } from "../../models/Prescription";
 function Program() {
   const navigate = useNavigate();
   const location = useLocation();
+  const idPrescription = location.state.idPrescription || "";
+  const IdMedicine = location.state.idMedicine || "";
   const [medicineName, setMedicineName]= useState<string>("");
   const [prescription, setPrescription] = useState<IPrescription>({
     therapy: "",
@@ -24,6 +26,7 @@ function Program() {
     dateTo: null,
   });
 
+  
   const [prescriptionTimes, setPrescriptionTimes] = useState<
     IPrescriptionTime[]
   >([
@@ -37,13 +40,28 @@ function Program() {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    setPrescription((prev) => ({
-      ...prev,
-      therapy: location.state?.idTherapy,
-      medicine: location.state?.idMedicine,
-    }));
+    if(idPrescription){
+      getPrescription(idPrescription);
+    } else {
+      setPrescription((prev) => ({
+        ...prev,
+        therapy: location.state?.idTherapy,
+        medicine: location.state?.idMedicine,
+      }));
+    }
+    
     getMedicineName(location.state?.idMedicine)
   }, []);
+
+  const getPrescription = async (id:string)=>{
+    try{
+      const result = await fetch(`http://localhost:3000/prescriptions/${id}`);
+      const data = await result.json();
+      setPrescription(data);
+    } catch {
+
+    }
+  }
 
   const getMedicineName = async (id:string) =>{
     try{
