@@ -76,5 +76,8 @@ body {
   background-color: white;
   width: 100%;
   justify-content: center;
+}
+
+.button-element {
   cursor: pointer;
 }

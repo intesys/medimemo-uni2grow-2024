@@ -1,39 +1,35 @@
-import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import { Layout } from "./components/layout/Layout.tsx";
 import Login from "./pages/login/Login";
 import Therapies from "./pages/therapies/Therapies.tsx";
 import AddEditTherapy from "./pages/addEditTherapy/AddEditTherapy.tsx";
-import Medications from "./pages/medications/Medications.tsx"
+import Medications from "./pages/medications/Medications.tsx";
 import TherapyDetails from "./pages/therapyDetails/TherapyDetails.tsx";
 import Profile from "./pages/profile/Profile";
 import Contacts from "./pages/contacts/Contacts.tsx";
 import AddEditContact from "./pages/addEditContact/AddEditContact.tsx";
-import {DoctorDetails} from "./pages/doctorDetails/DoctorDetails.tsx";
+import { DoctorDetails } from "./pages/doctorDetails/DoctorDetails.tsx";
 import Program from "./pages/program/Program.tsx";
 import DrugSpecifications from "./pages/medications/drugSpecifications/DrugSpecifications.tsx";
+import ViewPrescription  from "./pages/viewPrescription/ViewPrescription.tsx";
 
 const router = createBrowserRouter([
   {
-      path: "",
-      loader: ()=> redirect("/login"),
+    path: "",
+    loader: () => redirect("/login"),
   },
   {
-      path: "/login",
-      element: <Login />,
-    
-  },
-  {
-    path: "/drug/:id",
-    element: <DrugSpecifications />,
+    path: "/login",
+    element: <Login />,
   },
 
   {
     path: "/",
     loader: () => redirect("/login"),
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
   },
 
   {
@@ -41,7 +37,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/medications",
-        element: <Medications />
+        element: <Medications />,
       },
       {
         path: "medications",
@@ -72,8 +68,18 @@ const router = createBrowserRouter([
               },
               {
                 path: "program",
-                element: <Program />
-              }
+                children:[
+                  {
+                    path: "",
+                    element: <Program />,
+                  },
+                  {
+                    path:"view",
+                    element: <ViewPrescription />
+                  }
+                ]
+                
+              },
             ],
           },
           {
@@ -85,8 +91,8 @@ const router = createBrowserRouter([
               },
               {
                 path: "program",
-                element: <Program />
-              }
+                element: <Program />,
+              },
             ],
           },
           {
@@ -115,6 +121,10 @@ const router = createBrowserRouter([
             element: <DoctorDetails />,
           },
         ],
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

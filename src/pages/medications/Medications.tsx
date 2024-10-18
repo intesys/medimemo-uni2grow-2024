@@ -20,6 +20,7 @@ function Medications() {
       setError("");
       const response = await fetch("http://localhost:3000/doses");
       const data = await response.json();
+      if (data.length == 0) navigate("/therapies");
       setMedications(data);
     } catch {
       setError("Failed to load medications");
@@ -37,14 +38,17 @@ function Medications() {
   const handleToggle = async (medication: IDose) => {
     try {
       const dose: IDose = { ...medication };
-      dose.taken = !dose.taken
+      dose.taken = !dose.taken;
       const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dose)
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dose),
       };
       setErrorUpdate("");
-      const result = await fetch("http://localhost:3000/doses/" + dose.id, requestOptions);
+      const result = await fetch(
+        "http://localhost:3000/doses/" + dose.id,
+        requestOptions
+      );
       if (result.ok) {
         medication.taken = !medication.taken;
         const currentIndex = checked.findIndex((x) => x.id === medication.id);
@@ -59,7 +63,7 @@ function Medications() {
     } catch {
       setErrorUpdate("Failed to update medication");
     }
-  }
+  };
 
   function emptyDoses(doses: IDose[]): boolean {
     return doses.length === 0;
@@ -71,28 +75,34 @@ function Medications() {
   const printDate = () => {
     const dateObj = new Date();
     return dateObj.toLocaleDateString("en-UK", { dateStyle: "full" });
-  }
+  };
 
   return (
     <div className="medications-container">
       <div className="head-container">
         <IconButton onClick={() => navigate("/profile")}>
-        <Avatar src={logo} alt="Avatar" sx={{ width: 75, height: 75 }} />
+          <Avatar src={logo} alt="Avatar" sx={{ width: 75, height: 75 }} />
         </IconButton>
         <div className="title">
           <Typography variant="h6">Hi, Francesca</Typography>
-          <Typography variant="subtitle1">Your Medicines Reminders for today!</Typography>
+          <Typography variant="subtitle1">
+            Your Medicines Reminders for today!
+          </Typography>
         </div>
       </div>
       <div className="seond-container">
-        <Typography variant="h6" sx={{ mx: "20px", mt: "20px" }}>{printDate()}</Typography>
+        <Typography variant="h6" sx={{ mx: "20px", mt: "20px" }}>
+          {printDate()}
+        </Typography>
 
         <div className="all-list">
           {!isNull(error) ? (
             <Typography sx={{ color: "red" }}>{error}</Typography>
           ) : emptyDoses(medications) ? (
             <div className="empty-doses">
-              <Typography sx={{ margin: "20px" }}>No Doses available</Typography>
+              <Typography sx={{ margin: "20px" }}>
+                No Doses available
+              </Typography>
             </div>
           ) : (
             <List
@@ -106,23 +116,43 @@ function Medications() {
                 gap: "25px",
               }}
             >
-              {errorUpdate && <Typography color="error">{errorUpdate}</Typography>}
-              {medications.filter((item) => item.taken).length != 0 && <div className="sub-list">
-                {medications.filter((item) => item.taken).map((item) => {
-                  return (
-                    <ShowDose handleToggle={handleToggle} item={item} key={item.id} handleClick={handleClick} />
-                  )
-                })}
-              </div>}
-              {medications.filter((item) => !item.taken).length != 0 && <div className="sub-list">
-                {medications.filter((item) => !item.taken).map((item) => {
-                  return (
-                    <ShowDose handleToggle={handleToggle} item={item} key={item.id} handleClick={handleClick} />
-                  );
-                })}
-              </div>
-              }
-            </List>)}
+              {errorUpdate && (
+                <Typography color="error">{errorUpdate}</Typography>
+              )}
+              {medications.filter((item) => item.taken).length != 0 && (
+                <div className="sub-list">
+                  {medications
+                    .filter((item) => item.taken)
+                    .map((item) => {
+                      return (
+                        <ShowDose
+                          handleToggle={handleToggle}
+                          item={item}
+                          key={item.id}
+                          handleClick={handleClick}
+                        />
+                      );
+                    })}
+                </div>
+              )}
+              {medications.filter((item) => !item.taken).length != 0 && (
+                <div className="sub-list">
+                  {medications
+                    .filter((item) => !item.taken)
+                    .map((item) => {
+                      return (
+                        <ShowDose
+                          handleToggle={handleToggle}
+                          item={item}
+                          key={item.id}
+                          handleClick={handleClick}
+                        />
+                      );
+                    })}
+                </div>
+              )}
+            </List>
+          )}
         </div>
       </div>
     </div>

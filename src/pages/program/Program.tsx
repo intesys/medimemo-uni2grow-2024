@@ -49,7 +49,7 @@ function Program() {
       }));
     } 
 
-    getMedicineName(location.state?.idMedicine);
+    getMedicineName(IdMedicine);
   }, []);
 
   const getPrescription = async (id:string)=>{
@@ -191,7 +191,7 @@ function Program() {
             setAddError("Add prescrition time failed");
           }
         });
-        navigate(-1);
+        navigate("view", {state: {id: addPrescriptionResponse.id}});
       }
     } catch (e) {
       setAddError("Add prescription failed");
